@@ -3,6 +3,7 @@ import { Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
+
 import AuthService from "./services/auth.service";
 
 import Login from "./components/login.component";
@@ -12,7 +13,8 @@ import Profile from "./components/profile.component";
 import BoardUser from "./components/board-user.component";
 import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
-
+import Proba from "./sajatosztalyok/Proba";
+import Etterem from "./sajatosztalyok/Etterem";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -56,6 +58,20 @@ class App extends Component {
                 Home
               </Link>
             </li>
+            
+           
+            <li className="nav-item">
+              <Link to={"/Proba"} className="nav-link">
+                Próba
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link to={"/Etterem"} className="nav-link">
+                Étterem
+              </Link>
+            </li>
+
 
             {showModeratorBoard && (
               <li className="nav-item">
@@ -121,6 +137,9 @@ class App extends Component {
             <Route path="/user" component={BoardUser} />
             <Route path="/mod" component={BoardModerator} />
             <Route path="/admin" component={BoardAdmin} />
+            <Route path="/Proba" component={Proba} />
+            <Route path="/Proba" component={Etterem
+            } />
           </Switch>
         </div>
       </div>
@@ -129,3 +148,4 @@ class App extends Component {
 }
 
 export default App;
+
