@@ -138,7 +138,7 @@ class App extends Component {
             <Route path="/mod" component={BoardModerator} />
             <Route path="/admin" component={BoardAdmin} />
             <Route path="/Proba" component={Proba} />
-            <Route path="/Proba" component={Etterem
+            <Route path="/Etterem" component={Etterem
             } />
           </Switch>
         </div>
