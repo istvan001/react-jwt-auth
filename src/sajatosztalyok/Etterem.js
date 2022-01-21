@@ -1,5 +1,6 @@
 import React, { Component,useState} from 'react';
 import { StyleSheet, ActivityIndicator, FlatList, Text, View, Image,TouchableOpacity,TextInput } from 'react-native';
+import ReactStars from 'react-stars';
 
 export default class FetchExample extends Component {
 
@@ -24,7 +25,7 @@ export default class FetchExample extends Component {
     
   }
   componentDidMount(){
-    fetch('https://s1.siralycore.hu:8082/etterem')
+    /*fetch('http://localhost:8080/etterem')
      .then((response) => response.json())
      .then((responseJson) => {
        this.setState({
@@ -35,13 +36,13 @@ export default class FetchExample extends Component {
      })
      .catch((error) =>{
        console.error(error);
-     });
-     fetch('https://s1.siralycore.hu:8082/etterem2')
+     });*/
+     fetch('http://localhost:8080/etterem2')
      .then((response) => response.json())
      .then((responseJson) => {
        this.setState({
          isLoading: false,
-         rating: responseJson,
+         dataSource: responseJson,
        }, function(){          
      });
    })
@@ -50,22 +51,79 @@ export default class FetchExample extends Component {
      });
     }
 
+    felvitel= (szam)=>{
+      alert("Megnyomva")
+      let bemenet={
+        bevitel1:szam,
+        bevitel2:this.state.aktid
+      }
+    
+      fetch('http://localhost:8080/ert_felvi' ,{
+        method: "POST",
+        body: JSON.stringify(bemenet),
+        headers: {"Content-type": "application/json; charset=UTF-8"}
+        } )
+        .then((response) => response.text())
+        .then((szoveg) => {
+    
+          alert(szoveg)
+        })
+        .catch((error) =>{
+          console.error(error);
+        });       
+      }
+
+    kattintas=(szam)=>
+  {
+    alert(szam)
+    this.felvitel(szam)
+  }
+
   render() {
+    if(this.state.isLoading){
+      return(
+        <View style={styles.loading_content}>
+          <Text style={styles.loading}>Adatok betöltése</Text><ActivityIndicator color="white"/>
+        </View>
+      )
+    }
+    const ratingChanged = (ratings) => {
+      alert(ratings)
+      this.setState({aktid:ratings})
+     
+      
+      
+    }
     return (
+      <View style={{alignItems:"center"}}>
         <FlatList
-        data={this.state.dataSource,(this.state.rating)}
-        renderItem={({item}) => 
+        data={this.state.dataSource}
+        renderItem={({item}) =>
+         
         <View style={styles.card}>
           <View style={styles.center}>
-            <Image style={styles.image} source={{uri: 'https://s1.siralycore.hu:8082/kepek/'+item.kep}}/>
+            <Image style={styles.image} source={{uri: 'http://localhost:8080/'+item.kep}}/>
           </View>
           <Text style={styles.title}>{item.nev}</Text>
           <Text style={styles.label}>Cím: {item.lakcim}</Text>
           <Text style={styles.label}>Nyitvatartás: {"\n"}{item.nyitas}</Text>
           <Text style={styles.label}>Telefon: {item.telefon}</Text>
-          <Text style={styles.label1}>Értékelés: {item.atlag}/5</Text>    
+          <Text style={styles.label}>Értékelés: {Math.round(item.atlag)}/5</Text> 
+          <Text style={{padding:2,fontSize:20}}>Értékeld:</Text>  
+
+          <TouchableOpacity
+          onPress={ ()=>this.kattintas(item.id)}
+
+          style={{alignItems:"center"}}
+          >
+          <ReactStars
+            count={5}
+            half={false}
+            onChange={ratingChanged}
+            size={32}
+            color2={'#ffd700'} />
      
-          
+          </TouchableOpacity>
 
 
 
@@ -78,6 +136,8 @@ export default class FetchExample extends Component {
         }
         keyExtractor={({id}, index) => id}
       />
+      </View>
+      
     );
   }
 }
