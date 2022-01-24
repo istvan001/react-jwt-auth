@@ -86,6 +86,32 @@ export default class FetchExample extends Component {
     this.felvitel(szam)
   }
 
+  torles=(szam)=>
+  {
+    alert("Megnyomva")
+    let bemenet={
+      bevitel1:szam,
+      
+    }
+  
+    fetch('http://localhost:8080/torol' ,{
+      method: "POST",
+      body: JSON.stringify(bemenet),
+      headers: {"Content-type": "application/json; charset=UTF-8"}
+      } )
+      .then((response) => response.text())
+      .then((szoveg) => {
+        this.frissit()
+  
+        alert(szoveg)
+      })
+      .catch((error) =>{
+        console.error(error);
+      });       
+    }
+
+  
+
   render() {
     if(this.state.isLoading){
       return(
@@ -125,8 +151,8 @@ export default class FetchExample extends Component {
           <Text style={styles.label}>Cím: {item.lakcim}</Text>
           <Text style={styles.label}>Nyitvatartás: {"\n"}{item.nyitas}</Text>
           <Text style={styles.label}>Telefon: {item.telefon}</Text>
-          <Text style={styles.label}>Értékelés: {Math.round((item.atlag + Number.EPSILON) * 100) / 100}/5</Text> 
-          <Text style={{padding:2,fontSize:20}}>Értékeld:</Text>  
+          <Text style={styles.label1}>Értékelés: {Math.round((item.atlag + Number.EPSILON) * 100) / 100}/5</Text> 
+          <Text style={styles.label1}>Értékeld:</Text>  
 
           <TouchableOpacity
           onPress={ ()=>this.kattintas(item.id)}
@@ -140,6 +166,11 @@ export default class FetchExample extends Component {
             size={32}
             color2={'#ffd700'} />
      
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.gomb} onPress={ ()=>this.torles(item.id)} >
+            Törlés
+
           </TouchableOpacity>
 
 
