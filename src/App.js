@@ -16,6 +16,7 @@ import BoardAdmin from "./components/board-admin.component";
 import Proba from "./sajatosztalyok/Proba";
 import Etterem from "./sajatosztalyok/Etterem";
 import Adattorles from "./sajatosztalyok/Adattorles";
+import Kommenttorles from "./sajatosztalyok/Kommenttorles";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -98,6 +99,14 @@ class App extends Component {
               </li>
             )}
 
+            {showAdminBoard && (
+              <li className="nav-item">
+                <Link to={"/Kommenttorles"} className="nav-link">
+                  Vélemény Törlés
+                </Link>
+              </li>
+            )}
+
             {currentUser && (
               <li className="nav-item">
                 <Link to={"/user"} className="nav-link">
@@ -149,6 +158,7 @@ class App extends Component {
             <Route path="/Proba" component={Proba} />
             <Route path="/Etterem" component={Etterem} />
             <Route path="/Adattorles" component={Adattorles} />
+            <Route path="/Kommenttorles" component={Kommenttorles} />
           </Switch>
         </div>
       </div>
