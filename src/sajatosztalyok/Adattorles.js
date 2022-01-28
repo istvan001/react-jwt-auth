@@ -1,5 +1,5 @@
 import React, { Component,useState} from 'react';
-import { StyleSheet, ActivityIndicator, FlatList, Text, View, Image,TouchableOpacity,TextInput,ScrollView } from 'react-native';
+import { StyleSheet, ActivityIndicator, FlatList, Text, View, Image,TouchableOpacity,TextInput,ScrollView } from 'react-native-web';
 import ReactStars from 'react-stars';
 
 export default class FetchExample extends Component {

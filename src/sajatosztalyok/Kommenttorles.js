@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, StyleSheet, View,Text,TextInput, TouchableOpacity,FlatList,ActivityIndicator } from 'react-native';
+import { Button, StyleSheet, View,Text,TextInput, TouchableOpacity,FlatList,ActivityIndicator } from 'react-native-web';
 
 export default class FetchExample extends Component {
 
