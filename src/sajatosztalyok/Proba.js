@@ -1,54 +1,87 @@
 import React, { Component } from 'react';
-import { Button, StyleSheet, View } from 'react-native-web';
-
+import { Button, StyleSheet, View,Text,TextInput } from 'react-native';
+import FileUpload from "./upload"
 export default class ButtonBasics extends Component {
-  _onPressButton() {
-    alert('You tapped the button!')
-  }
+  constructor(props){
+    super(props);
+    this.state ={
+      etteremnev:"",
+      lakcim:"",
+      telefon:"",
+      nyitas:""
+
+      }
+    }
+  
 
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.buttonContainer}>
-          <Button
-            onPress={this._onPressButton}
-            title="Press Me"
-          />
+      <View>
+        <View style={{flexDirection:"row"}}>
+        <Text style={styles.label1}>
+         Étterem Néve:
+        </Text>
+        <TextInput
+          style={styles.szovegdoboz}
+          placeholder="Add meg az étterem nevét!"
+          onChangeText={(etteremnev) => this.setState({etteremnev})}
+          value={this.state.etteremnev}
+        /></View>
+
+        <View style={{flexDirection:"row"}}>
+        <Text style={styles.label1}>
+         Étterem lakcíme:
+        </Text>
+        <TextInput
+          style={styles.szovegdoboz}
+          placeholder="Add meg az étterem lakcímét!"
+          onChangeText={(lakcim) => this.setState({lakcim})}
+          value={this.state.lakcim}
+        /></View>
+
+        <View style={{flexDirection:"row"}}>
+        <Text style={styles.label1}>
+         Étterem telefonszáma:
+        </Text>
+        <TextInput
+          style={styles.szovegdoboz}
+          placeholder="Add meg az étterem telefonszámát!"
+          onChangeText={(telefon) => this.setState({telefon})}
+          value={this.state.telefon}
+        /></View>
+        <View style={{flexDirection:"row"}}>
+        <Text style={styles.label1}>
+         Étterem nyitvatartási ideje:
+        </Text>
+        <TextInput
+          style={styles.szovegdoboz}
+          placeholder="Add meg az étterem nyitva tartási idejét !"
+          onChangeText={(nyitas) => this.setState({nyitas})}
+          value={this.state.nyitas}
+        />
         </View>
-        <View style={styles.buttonContainer}>
-          <Button
-            onPress={this._onPressButton}
-            title="Press Me"
-            color="#841584"
-          />
-        </View>
-        <View style={styles.alternativeLayoutButtonContainer}>
-          <Button
-            onPress={this._onPressButton}
-            title="This looks great!"
-          />
-          <Button
-            onPress={this._onPressButton}
-            title="OK!"
-            color="#841584"
-          />
-        </View>
+        
+
+      <FileUpload  etteremnev={this.state.etteremnev} lakcim={this.state.lakcim} telefon={this.state.telefon} nyitas={this.state.nyitas} >
+        
+      </FileUpload>
       </View>
+        
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-   flex: 1,
-   justifyContent: 'center',
-  },
-  buttonContainer: {
-    margin: 20
-  },
-  alternativeLayoutButtonContainer: {
-    margin: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
+  szovegdoboz:
+  {
+    padding:10,
+    borderWidth:1,
+    borderRadius:10,
+    marginBottom:5,
+    width:250,
+    height:30,
+    backgroundColor:"white",
+     marginLeft:"auto",
+     marginRight:700
   }
 });

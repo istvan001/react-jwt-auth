@@ -1,5 +1,5 @@
-import React, { Component,useState} from 'react';
-import { StyleSheet, ActivityIndicator, FlatList, Text, View, Image,TouchableOpacity,TextInput,ScrollView } from 'react-native-web';
+import React, { Component} from 'react';
+import { StyleSheet, ActivityIndicator, FlatList, Text, View, Image,TouchableOpacity,TextInput} from 'react-native';
 import ReactStars from 'react-stars';
 
 export default class FetchExample extends Component {
@@ -56,6 +56,37 @@ export default class FetchExample extends Component {
      this.frissit();
     }
 
+    Kereses=()=>
+  {
+    alert("Megnyomva")
+    var bemenet={
+      bevitel1:this.state.kereses,
+      
+    }
+  
+    fetch('http://localhost:8080/kereses2' ,{
+        method: "POST",
+        body: JSON.stringify(bemenet),
+        headers: {"Content-type": "application/json; charset=UTF-8"}
+      }
+      )
+        .then((response) => response.json())
+        .then((responseJson) => {
+  
+          this.setState({
+            isLoading: false,
+            dataSource: responseJson,
+          }, function(){
+  
+          });
+  
+        })
+        .catch((error) =>{
+          console.error(error);
+        });
+           
+    }
+
     felvitel= (szam)=>{
       alert("Megnyomva")
       let bemenet={
@@ -79,6 +110,9 @@ export default class FetchExample extends Component {
           console.error(error);
         });       
       }
+
+  
+
 
     kattintas=(szam)=>
   {
@@ -110,6 +144,10 @@ export default class FetchExample extends Component {
       });       
     }
 
+
+
+    
+
   
 
   render() {
@@ -131,8 +169,32 @@ export default class FetchExample extends Component {
     
     return (
       <View>
-
+        <View style={{flexDirection:"row"}}>
       <Text style={{fontSize:64,fontStyle:"italic",margin:10,marginLeft:40}} >Éttermek:</Text>
+
+      <View style={{borderWidth:1,borderRadius:10,padding: 10,alignItems:"center",borderRadius:20,marginLeft:"auto",marginRight:"auto",width:400}}>
+        
+        <Text>Kereső mező</Text>
+        <TextInput
+          style={styles.szovegdoboz2}
+          placeholder="Add meg az étterem nevét!"
+          onChangeText={(kereses) => this.setState({kereses})}
+          
+        />
+     
+ 
+        <TouchableOpacity 
+        
+        onPress={async ()=>this.Kereses()}>
+          <View style={{width:200,backgroundColor:"lightgrey",marginTop:10,borderRadius:5}}>
+            <Text style={{textAlign:"center",padding:10 }}>Keresés</Text>
+          </View>
+        </TouchableOpacity>
+ 
+        </View>
+        </View>
+
+
       <View style={{alignItems:"center"}}>
       
         <FlatList

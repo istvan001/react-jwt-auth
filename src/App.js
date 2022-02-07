@@ -52,38 +52,53 @@ class App extends Component {
     return (
       <div>
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-      <Navbar.Brand href="#home">
+      <Navbar.Brand href="/Etterem">
         
-        Dice Roller
+        Éttermek
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="/Etterem">Étterem</Nav.Link>
-          <Nav.Link href="#pricing">Pricing</Nav.Link>
-          <NavDropdown title="Kezdőlap" id="collasible-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">
-              Another action
-            </NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item href="#action/3.4">
-              Separated link
-            </NavDropdown.Item>
+          {/*<Nav.Link href="/Etterem">Étterem</Nav.Link>*/}
+          {showAdminBoard && (
+          <Nav.Link href="/Proba">Feltöltés</Nav.Link>
+          )}
+          {showAdminBoard && (
+          <NavDropdown title="Törlés" id="collasible-nav-dropdown">
+            <NavDropdown.Item href="/Kommenttorles">Komment törles</NavDropdown.Item>
+             <NavDropdown.Divider />
+            <NavDropdown.Item href="/Adattorles">Étterem törlés</NavDropdown.Item>
+           
+            
           </NavDropdown>
+          )}
         </Nav>
+        {currentUser ? (
         <Nav>
-          <Nav.Link href="#deets">More deets</Nav.Link>
-          <Nav.Link eventKey={2} href="#memes">
-            Dank memes
+          <Nav.Link href="/profile">
+          {currentUser.username}
+            </Nav.Link>
+
+          <Nav.Link eventKey={2} href="/login"  onClick={this.logOut}>
+         Kijelentkezés
           </Nav.Link>
         </Nav>
+         ) : (
+          <Nav>
+          <Nav.Link href="/register">
+          Új profil
+            </Nav.Link>
+
+          <Nav.Link eventKey={2} href="/login">
+           Bejelentkezés
+          </Nav.Link>
+        </Nav>
+         )}
       </Navbar.Collapse>
     </Navbar>
 
 
-      {/*RéGI*/}
+      {/*RéGI
 
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <Link to={"/"} className="navbar-brand">
@@ -179,7 +194,7 @@ class App extends Component {
               </li>
             </div>
           )}
-        </nav>
+        </nav>*/}
 
         <div className="container mt-3">
           <Switch>
@@ -196,7 +211,7 @@ class App extends Component {
             <Route path="/Kommenttorles" component={Kommenttorles} />
           </Switch>
         </div>
-      </div>
+          </div>
     );
   }
 }

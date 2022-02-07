@@ -1,0 +1,4 @@
+modal
+velemenyek
+etterem törlés *
+egy menüsor*

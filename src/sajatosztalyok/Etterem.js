@@ -1,6 +1,7 @@
-import React, { Component,useState} from 'react';
-import { StyleSheet, ActivityIndicator, FlatList, Text, View, Image,TouchableOpacity,TextInput,ScrollView } from 'react-native-web';
+import React, { Component} from 'react';
+import { StyleSheet, ActivityIndicator, FlatList, Text, View, Image,TouchableOpacity,TextInput} from 'react-native';
 import ReactStars from 'react-stars';
+
 
 export default class FetchExample extends Component {
 
@@ -19,7 +20,10 @@ export default class FetchExample extends Component {
         megnyomva2:[],
         megnyom:[],
         nev: '',
-        velemeny:""
+        velemeny:"",
+        modalVisible: false,
+  currentTab: 1,
+        
         }
     
     
@@ -54,6 +58,12 @@ export default class FetchExample extends Component {
        console.error(error);
      });*/
      this.frissit();
+
+
+     let m=this.state.megnyomva;
+        for (let elem of this.state.dataSource)
+            m[elem.id]=true
+        this.setState({megnyomva:m})
     }
 
     felvitel= (szam)=>{
@@ -63,29 +73,128 @@ export default class FetchExample extends Component {
         bevitel2:this.state.aktid
       }
     
-      fetch('http://localhost:8080/ert_felvi' ,{
+      fetch('https://s1.siralycore.hu:8082/ert_felvi' ,{
         method: "POST",
         body: JSON.stringify(bemenet),
         headers: {"Content-type": "application/json; charset=UTF-8"}
         } )
         .then((response) => response.text())
         .then((szoveg) => {
+          this.frissit()
     
           alert(szoveg)
-          
-          this.frissit()
         })
         .catch((error) =>{
           console.error(error);
         });       
       }
+    
+    
+      vfelvitel=async (szam)=>{
+        alert(szam)
+         let bemenet={
+          bevitel1: szam,
+          bevitel2: this.state.nev,
+          bevitel3: this.state.velemeny
+        }
+     
+        fetch('https://s1.siralycore.hu:8082/vfelvi', {
+          method: "POST",
+          body: JSON.stringify(bemenet),
+          headers: {"Content-type": "application/json; charset=UTF-8"}
+          } )
+          .then((response) => response.text())
+          .then((szoveg) => {
+    
+            //alert(szoveg)
+            this.setState({nev:""})
+            this.setState({velemeny:""})
+    
+            this.frissit()
+            
+            
+          })
+          .catch((error) =>{
+            console.error(error);
+          });
+    
+    
+    
+      }
+    
+      nov = async()=>{
+        return fetch('https://s1.siralycore.hu:8082/etterem_abc_rend' )
+        .then((response) => response.json())
+        .then((responseJson) => {
+          this.setState({
+            isLoading: false,
+            dataSource: responseJson,
+          }, function(){          
+        });
+      })
+        .catch((error) =>{
+          console.error(error);
+        });
+      }
+      csok = async(szam)=>{
+        return fetch('https://s1.siralycore.hu:8082/etterem_abc_csok' )
+        .then((response) => response.json())
+        .then((responseJson) => {
+          this.setState({
+            isLoading: false,
+            dataSource: responseJson,
+          }, function(){          
+        });
+      })
+        .catch((error) =>{
+          console.error(error);
+        });
+      }
+    
+      ert = async(szam)=>{
+        return fetch('https://s1.siralycore.hu:8082/ert_rend' )
+        .then((response) => response.json())
+        .then((responseJson) => {
+          this.setState({
+            isLoading: false,
+            dataSource: responseJson,
+          }, function(){          
+        });
+      })
+        .catch((error) =>{
+          console.error(error);
+        });
+      }
+      
+      kattintas=(szam)=>
+      {
+        alert(szam)
+        this.felvitel(szam)
+      }
+    
+      megnyomas=(sorszam)=>{
+        //alert(sorszam)
+        let m=this.state.megnyomva
+        m[sorszam]=!m[sorszam]
+        this.setState({megnyomva:m})
+    
+    
+        
+      }
+      megnyomas2=(sorszam)=>{
+        //alert(sorszam)
+        let m=this.state.megnyomva2
+        m[sorszam]=!m[sorszam]
+        this.setState({megnyomva2:m})
+      }
 
-    kattintas=(szam)=>
-  {
-    alert(szam)
-    this.felvitel(szam)
-  }
+     
 
+      onTabClick = (currentTab) => {
+        this.setState({
+          currentTab: currentTab,
+        });
+      };
   render() {
     if(this.state.isLoading){
       return(
@@ -101,12 +210,20 @@ export default class FetchExample extends Component {
       
       
     }
+    const { modalVisible } = this.state;
+
 
     
     return (
       <View>
 
       <Text style={{fontSize:64,fontStyle:"italic",margin:10,marginLeft:40}} >Éttermek</Text>
+
+
+
+
+
+
       <View style={{alignItems:"center"}}>
       
         <FlatList
@@ -144,7 +261,59 @@ export default class FetchExample extends Component {
 
 
 
-        
+          <TouchableOpacity onPress={async()=>this.megnyomas(item.id)} style={styles.gomb}> 
+          <Text style={styles.label1}>Vélemények</Text>
+          </TouchableOpacity>
+
+
+          
+         
+            <View style={styles.velemeny}>
+            <Text style={{ padding: 5,fontSize:17}}>Név:</Text>
+            <Text style={{padding: 5,fontSize:15,marginLeft:10}}>{item.velemeny_nev}</Text>
+            <Text style={{padding: 5,fontSize:17}}>Vélemény:</Text>
+            <Text style={{padding: 5,fontSize:15,marginLeft:10}}>{item.velemeny}</Text>
+
+
+            
+            </View>
+          
+            
+
+          <TouchableOpacity onPress={()=>this.megnyomas2(item.id)} style={styles.gomb}> 
+          <Text style={styles.label1}>Saját Vélemény</Text>
+          </TouchableOpacity>
+
+          
+          <View style={{borderWidth:1,borderRadius:10,padding: 10,alignItems:"center",borderRadius:20,marginLeft:20,marginRight:20}}>
+         <Text style={styles.label1}>
+         Név:
+        </Text>
+        <TextInput
+          style={styles.szovegdoboz}
+          placeholder="Add meg a nevedet!"
+          onChangeText={(nev) => this.setState({nev})}
+          value={this.state.nev}
+        />
+         <Text style={styles.label1}>
+         Vélemény:
+        </Text>
+        <TextInput
+          style={styles.szovegdoboz2}
+          placeholder="Add meg a véleményed!"
+          onChangeText={(velemeny) => this.setState({velemeny})}
+          value={this.state.velemeny}
+        />
+
+        <TouchableOpacity 
+        onPress={async ()=>this.vfelvitel(item.id)}>
+          <View style={{width:200,backgroundColor:"lightgrey",marginTop:10,borderRadius:5}}>
+            <Text style={{textAlign:"center",padding:10 }}>Felvitel</Text>
+          </View>
+        </TouchableOpacity>
+            </View>
+          
+
           
 
         
