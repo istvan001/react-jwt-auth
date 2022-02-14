@@ -1,7 +1,7 @@
 import React, { Component} from 'react';
 import { StyleSheet, ActivityIndicator, FlatList, Text, View, Image,TouchableOpacity,TextInput} from 'react-native';
 import ReactStars from 'react-stars';
-
+import {Collapse,CollapseHeader, CollapseBody, AccordionList} from 'accordion-collapse-react-native';
 
 export default class FetchExample extends Component {
 
@@ -10,6 +10,7 @@ export default class FetchExample extends Component {
       this.state ={
         isLoading: true,
         dataSource:[],
+        dataSource2:[],
         rating:[],
         szam1:1,
         aktid:1,
@@ -30,6 +31,19 @@ export default class FetchExample extends Component {
   }
     frissit=()=>{
       fetch('http://localhost:8080/etterem2')
+     .then((response) => response.json())
+     .then((responseJson) => {
+       this.setState({
+         isLoading: false,
+         dataSource: responseJson,
+       }, function(){          
+     });
+   })
+     .catch((error) =>{
+       console.error(error);
+     });
+
+     fetch('http://localhost:8080/velemenyek')
      .then((response) => response.json())
      .then((responseJson) => {
        this.setState({
@@ -187,6 +201,9 @@ export default class FetchExample extends Component {
         m[sorszam]=!m[sorszam]
         this.setState({megnyomva2:m})
       }
+      alap=()=>{
+        this.frissit();
+      }
 
      
 
@@ -210,14 +227,54 @@ export default class FetchExample extends Component {
       
       
     }
-    const { modalVisible } = this.state;
+   
 
 
     
     return (
       <View>
+      
+        <Text style={{fontSize:64,fontStyle:"italic",margin:10,marginLeft:40}}>Éttermek</Text>
+      
+      <Collapse>
+      
+          <CollapseHeader style={{marginLeft:40,borderWidth:1,borderRadius:10,width:200,height:40,margin:5,backgroundColor:"white"}}>
+            
+            
+            <Text style={{textAlign:"center",fontSize:25}}>Rendezés</Text>
+          
+          </CollapseHeader>
+         
+          <CollapseBody>
+            <View style={{marginLeft:47}}>
+          <TouchableOpacity
+              style={{borderWidth:1,borderRadius:10,width:170,height:30,margin:5,backgroundColor:"white"}}
+              onPress={async(szam)=>this.nov()}
+              >
+            <Text style={{textAlign:"center",fontSize:20}}>Rendezés (ABC)↑</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{borderWidth:1,borderRadius:10,width:170,height:30,margin:5,backgroundColor:"white"}}
+              onPress={async(szam)=>this.csok()}
+              >
+            <Text style={{textAlign:"center",fontSize:20}}>Rendezés (ABC)↓</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{borderWidth:1,borderRadius:10,width:170,height:30,margin:5,backgroundColor:"white"}}
+              onPress={async(szam)=>this.ert()}
+              >
+            <Text style={{textAlign:"center",fontSize:20}}>Értékelés</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{borderWidth:1,borderRadius:10,width:170,height:30,margin:5,backgroundColor:"white"}}
+              onPress={async(szam)=>this.alap()}
+              >
+            <Text style={{textAlign:"center",fontSize:20}}>alap</Text>
+            </TouchableOpacity>
+            </View>
+            </CollapseBody>
 
-      <Text style={{fontSize:64,fontStyle:"italic",margin:10,marginLeft:40}} >Éttermek</Text>
+            </Collapse>
 
 
 
@@ -259,64 +316,88 @@ export default class FetchExample extends Component {
      
           </TouchableOpacity>
 
+          
 
-
-          <TouchableOpacity onPress={async()=>this.megnyomas(item.id)} style={styles.gomb}> 
-          <Text style={styles.label1}>Vélemények</Text>
-          </TouchableOpacity>
+          <Collapse>
+          <CollapseHeader style={styles.gomb}>
+            <View>
+            
+                <Text style={styles.label1}>Vélemények</Text>
+              
+            
+                
+                </View>
+          </CollapseHeader>
 
 
           
-         
+            <CollapseBody>
             <View style={styles.velemeny}>
+            <FlatList
+            data={this.state.dataSource2}
+        
+            renderItem={({item}) =>
+            <View>
+            
             <Text style={{ padding: 5,fontSize:17}}>Név:</Text>
             <Text style={{padding: 5,fontSize:15,marginLeft:10}}>{item.velemeny_nev}</Text>
             <Text style={{padding: 5,fontSize:17}}>Vélemény:</Text>
             <Text style={{padding: 5,fontSize:15,marginLeft:10}}>{item.velemeny}</Text>
+            </View>
+            }
+            keyExtractor={({velemenyid}, index) => velemenyid}
 
 
+            />
             
             </View>
-          
-            
 
-          <TouchableOpacity onPress={()=>this.megnyomas2(item.id)} style={styles.gomb}> 
-          <Text style={styles.label1}>Saját Vélemény</Text>
-          </TouchableOpacity>
+            <Collapse>
+              <CollapseHeader style={styles.gomb}>
+                <View>
+                
+                    <Text style={styles.label1}>Saját Vélemény</Text>
+                  
+                </View>
+              </CollapseHeader>
+              <CollapseBody>
+              <View style={{borderWidth:1,borderRadius:10,padding: 10,alignItems:"center",borderRadius:20,marginLeft:20,marginRight:20}}>
+                  <Text style={styles.label1}>
+                  Név:
+                  </Text>
+                  <TextInput
+                    style={styles.szovegdoboz}
+                    placeholder="Add meg a nevedet!"
+                    onChangeText={(nev) => this.setState({nev})}
+                    value={this.state.nev}
+                  />
+                  <Text style={styles.label1}>
+                  Vélemény:
+                  </Text>
+                  <TextInput
+                    style={styles.szovegdoboz2}
+                    placeholder="Add meg a véleményed!"
+                    onChangeText={(velemeny) => this.setState({velemeny})}
+                    value={this.state.velemeny}
+                  />
 
-          
-          <View style={{borderWidth:1,borderRadius:10,padding: 10,alignItems:"center",borderRadius:20,marginLeft:20,marginRight:20}}>
-         <Text style={styles.label1}>
-         Név:
-        </Text>
-        <TextInput
-          style={styles.szovegdoboz}
-          placeholder="Add meg a nevedet!"
-          onChangeText={(nev) => this.setState({nev})}
-          value={this.state.nev}
-        />
-         <Text style={styles.label1}>
-         Vélemény:
-        </Text>
-        <TextInput
-          style={styles.szovegdoboz2}
-          placeholder="Add meg a véleményed!"
-          onChangeText={(velemeny) => this.setState({velemeny})}
-          value={this.state.velemeny}
-        />
+                  <TouchableOpacity 
+                  onPress={async ()=>this.vfelvitel(item.id)}>
+                    <View style={{width:200,backgroundColor:"lightgrey",marginTop:10,borderRadius:5}}>
+                      <Text style={{textAlign:"center",padding:10 }}>Felvitel</Text>
+                    </View>
+                  </TouchableOpacity>
+                      </View>
+              </CollapseBody>
+          </Collapse>
 
-        <TouchableOpacity 
-        onPress={async ()=>this.vfelvitel(item.id)}>
-          <View style={{width:200,backgroundColor:"lightgrey",marginTop:10,borderRadius:5}}>
-            <Text style={{textAlign:"center",padding:10 }}>Felvitel</Text>
-          </View>
-        </TouchableOpacity>
-            </View>
-          
 
-          
 
-        
+
+            </CollapseBody>
+            </Collapse>
+
+
           
         </View>
         
@@ -364,6 +445,7 @@ const styles = StyleSheet.create({
       backgroundColor: "white",
       borderWidth:1,
       borderRadius:10,
+      
 
      
       
@@ -398,7 +480,8 @@ const styles = StyleSheet.create({
       shadowOpacity: 2,
       shadowRadius: 5,
       elevation: 1,
-      textAlign:"center"
+      justifyContent: 'center',
+        alignItems: 'center',
    
      },
      gomb1:{

@@ -1,4 +1,4 @@
-modal
+collapsible*
 velemenyek
 etterem törlés *
 egy menüsor*

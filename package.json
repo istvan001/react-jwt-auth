@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@eliav2/react-native-collapsible-view": "^1.4.0",
+    "@monchilin/react-native-dropdown": "^0.2.3",
     "@react-native-picker/picker": "^2.2.1",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
@@ -16,6 +18,7 @@
     "react-modal": "^3.14.4",
     "react-native": "^0.67.2",
     "react-native-collapsible-list": "^2.2.2",
+    "react-native-dropdown-picker": "^5.3.0",
     "react-native-ratings": "^8.1.0",
     "react-native-web": "^0.17.5",
     "react-refresh": "^0.11.0",
