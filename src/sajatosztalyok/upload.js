@@ -1,4 +1,3 @@
-
 import { render } from '@testing-library/react';
 import axios from 'axios';
 import React,{useState} from 'react'
@@ -27,6 +26,7 @@ function FileUpload(props) {
                 "http://localhost:8080/upload",
                 formData
             );
+           
             console.log(res);
             alert("sikerült")
                 //-----------------------------------------------------------------------------

@@ -18,6 +18,7 @@ import Proba from "./sajatosztalyok/Proba";
 import Etterem from "./sajatosztalyok/Etterem";
 import Adattorles from "./sajatosztalyok/Adattorles";
 import Kommenttorles from "./sajatosztalyok/Kommenttorles";
+import ErtekelesekSzama from "./sajatosztalyok/ErtekelesekSzama";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -56,12 +57,18 @@ class App extends Component {
         
         Éttermek
       </Navbar.Brand>
+
+
+     
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
           {/*<Nav.Link href="/Etterem">Étterem</Nav.Link>*/}
           {showAdminBoard && (
           <Nav.Link href="/Proba">Feltöltés</Nav.Link>
+          )}
+          {showAdminBoard && (
+          <Nav.Link href="/ErtekelesekSzama">Értékelések Száma</Nav.Link>
           )}
           {showAdminBoard && (
           <NavDropdown title="Törlés" id="collasible-nav-dropdown">
@@ -209,6 +216,7 @@ class App extends Component {
             <Route path="/Etterem" component={Etterem} />
             <Route path="/Adattorles" component={Adattorles} />
             <Route path="/Kommenttorles" component={Kommenttorles} />
+            <Route path="/ErtekelesekSzama" component={ErtekelesekSzama} />
           </Switch>
         </div>
           </div>

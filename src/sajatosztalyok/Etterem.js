@@ -1,7 +1,7 @@
 import React, { Component} from 'react';
 import { StyleSheet, ActivityIndicator, FlatList, Text, View, Image,TouchableOpacity,TextInput} from 'react-native';
 import ReactStars from 'react-stars';
-import {Collapse,CollapseHeader, CollapseBody, AccordionList} from 'accordion-collapse-react-native';
+import {Collapse,CollapseHeader, CollapseBody} from 'accordion-collapse-react-native';
 
 export default class FetchExample extends Component {
 
@@ -23,7 +23,9 @@ export default class FetchExample extends Component {
         nev: '',
         velemeny:"",
         modalVisible: false,
-  currentTab: 1,
+        currentTab: 1,
+        starCount: 3,
+        ert_szam:0
         
         }
     
@@ -48,13 +50,16 @@ export default class FetchExample extends Component {
      .then((responseJson) => {
        this.setState({
          isLoading: false,
-         dataSource: responseJson,
+         dataSource2: responseJson,
        }, function(){          
      });
    })
      .catch((error) =>{
        console.error(error);
      });
+
+
+     this.setState()
 
     }
 
@@ -76,18 +81,18 @@ export default class FetchExample extends Component {
 
      let m=this.state.megnyomva;
         for (let elem of this.state.dataSource)
-            m[elem.id]=true
+            m[elem.id]=0
         this.setState({megnyomva:m})
     }
 
-    felvitel= (szam)=>{
+    felvitel= (ratings,hanyadik)=>{
       alert("Megnyomva")
       let bemenet={
-        bevitel1:szam,
-        bevitel2:this.state.aktid
+        bevitel1:hanyadik,
+        bevitel2:ratings
       }
     
-      fetch('https://s1.siralycore.hu:8082/ert_felvi' ,{
+      fetch('http://localhost:8080/ert_felvi' ,{
         method: "POST",
         body: JSON.stringify(bemenet),
         headers: {"Content-type": "application/json; charset=UTF-8"}
@@ -102,6 +107,7 @@ export default class FetchExample extends Component {
           console.error(error);
         });       
       }
+      
     
     
       vfelvitel=async (szam)=>{
@@ -112,7 +118,7 @@ export default class FetchExample extends Component {
           bevitel3: this.state.velemeny
         }
      
-        fetch('https://s1.siralycore.hu:8082/vfelvi', {
+        fetch('http://localhost:8080/vfelvi', {
           method: "POST",
           body: JSON.stringify(bemenet),
           headers: {"Content-type": "application/json; charset=UTF-8"}
@@ -137,7 +143,7 @@ export default class FetchExample extends Component {
       }
     
       nov = async()=>{
-        return fetch('https://s1.siralycore.hu:8082/etterem_abc_rend' )
+        return fetch('http://localhost:8080/etterem_abc_rend' )
         .then((response) => response.json())
         .then((responseJson) => {
           this.setState({
@@ -151,7 +157,7 @@ export default class FetchExample extends Component {
         });
       }
       csok = async(szam)=>{
-        return fetch('https://s1.siralycore.hu:8082/etterem_abc_csok' )
+        return fetch('hhttp://localhost:8080/etterem_abc_csok' )
         .then((response) => response.json())
         .then((responseJson) => {
           this.setState({
@@ -166,7 +172,7 @@ export default class FetchExample extends Component {
       }
     
       ert = async(szam)=>{
-        return fetch('https://s1.siralycore.hu:8082/ert_rend' )
+        return fetch('http://localhost:8080/ert_rend' )
         .then((response) => response.json())
         .then((responseJson) => {
           this.setState({
@@ -182,8 +188,11 @@ export default class FetchExample extends Component {
       
       kattintas=(szam)=>
       {
-        alert(szam)
-        this.felvitel(szam)
+      
+        
+        let m=this.state.megnyomva
+  m[szam]=!m[szam]
+  this.setState({megnyomva:m})
       }
     
       megnyomas=(sorszam)=>{
@@ -212,6 +221,19 @@ export default class FetchExample extends Component {
           currentTab: currentTab,
         });
       };
+
+
+      onStarRatingPress(ratings,hanyadik) {
+        
+        alert(ratings)
+        alert(hanyadik)
+       // this.setState({starCount:ratings})
+        let m=this.state.megnyomva
+        m[hanyadik]=ratings
+        this.setState({megnyomva:m})
+        this.felvitel(ratings,hanyadik)
+
+      }
   render() {
     if(this.state.isLoading){
       return(
@@ -220,13 +242,7 @@ export default class FetchExample extends Component {
         </View>
       )
     }
-    const ratingChanged = (ratings) => {
-      alert(ratings)
-      this.setState({aktid:ratings})
-     
-      
-      
-    }
+    
    
 
 
@@ -234,11 +250,11 @@ export default class FetchExample extends Component {
     return (
       <View>
       
-        <Text style={{fontSize:64,fontStyle:"italic",margin:10,marginLeft:40}}>Éttermek</Text>
+        <Text style={{fontSize:64,fontStyle:"italic",marginBottom:10}}>Éttermek</Text>
       
       <Collapse>
       
-          <CollapseHeader style={{marginLeft:40,borderWidth:1,borderRadius:10,width:200,height:40,margin:5,backgroundColor:"white"}}>
+          <CollapseHeader style={{borderWidth:1,borderRadius:10,width:200,height:40,margin:5,backgroundColor:"white"}}>
             
             
             <Text style={{textAlign:"center",fontSize:25}}>Rendezés</Text>
@@ -246,7 +262,7 @@ export default class FetchExample extends Component {
           </CollapseHeader>
          
           <CollapseBody>
-            <View style={{marginLeft:47}}>
+            <View style={{marginLeft:10}}>
           <TouchableOpacity
               style={{borderWidth:1,borderRadius:10,width:170,height:30,margin:5,backgroundColor:"white"}}
               onPress={async(szam)=>this.nov()}
@@ -284,7 +300,7 @@ export default class FetchExample extends Component {
       <View style={{alignItems:"center"}}>
       
         <FlatList
-        contentContainerStyle={{flexDirection : "row", flexWrap : "wrap", justifyContent:'center', alignItems:'center',}} 
+        contentContainerStyle={{flexDirection : "row", flexWrap : "wrap", justifyContent:'center', alignItems:'center'}} 
         
         
         data={this.state.dataSource}
@@ -299,26 +315,32 @@ export default class FetchExample extends Component {
           <Text style={styles.label}>Cím: {item.lakcim}</Text>
           <Text style={styles.label}>Nyitvatartás: {"\n"}{item.nyitas}</Text>
           <Text style={styles.label}>Telefon: {item.telefon}</Text>
-          <Text style={styles.label}>Értékelés: {Math.round((item.atlag + Number.EPSILON) * 100) / 100}/5</Text> 
-          <Text style={{padding:2,fontSize:20}}>Értékeld:</Text>  
+           
+          <Text style={{padding:2,fontSize:20}}>Értékelés:</Text>  
 
           <TouchableOpacity
           onPress={ ()=>this.kattintas(item.id)}
 
-          style={{alignItems:"center"}}
+          style={{}}
           >
           <ReactStars
             count={5}
             half={false}
-            onChange={ratingChanged}
+            value={this.state.megnyomva[item.id]}
+            onChange={(ratings) => this.onStarRatingPress(ratings,item.id)}
             size={32}
             color2={'#ffd700'} />
+            
      
           </TouchableOpacity>
+          <Text style={styles.label} style={{marginLeft:25,marginBottom:10}}>Átlag: {Math.round((item.atlag + Number.EPSILON) * 100) / 100}/5</Text>
 
           
 
-          <Collapse>
+          <Collapse
+            
+
+          >
           <CollapseHeader style={styles.gomb}>
             <View>
             
@@ -332,12 +354,12 @@ export default class FetchExample extends Component {
 
           
             <CollapseBody>
-            <View style={styles.velemeny}>
+            <View >
             <FlatList
             data={this.state.dataSource2}
         
             renderItem={({item}) =>
-            <View>
+            <View style={styles.velemeny}>
             
             <Text style={{ padding: 5,fontSize:17}}>Név:</Text>
             <Text style={{padding: 5,fontSize:15,marginLeft:10}}>{item.velemeny_nev}</Text>
@@ -360,8 +382,8 @@ export default class FetchExample extends Component {
                   
                 </View>
               </CollapseHeader>
-              <CollapseBody>
-              <View style={{borderWidth:1,borderRadius:10,padding: 10,alignItems:"center",borderRadius:20,marginLeft:20,marginRight:20}}>
+              <CollapseBody style={{alignItems:"center"}}>
+              <View style={{borderWidth:1,width:'90%',borderRadius:10,padding: 10,alignItems:"center",borderRadius:20,marginLeft:20,marginRight:20}}>
                   <Text style={styles.label1}>
                   Név:
                   </Text>
@@ -438,13 +460,14 @@ const styles = StyleSheet.create({
     },
     card: {
       padding: 10,
-      margin: 10,
       marginBottom: 10,
-      width: 300,
-      borderRadius: 10,
+      width:'100°',
+      borderTopWidth:2,
       backgroundColor: "white",
-      borderWidth:1,
-      borderRadius:10,
+      margin:"auto"
+
+
+
       
 
      
@@ -452,10 +475,12 @@ const styles = StyleSheet.create({
     },
     label:{
       padding: 5
+      
     },
     image:{
-      width: 200,
-      height: 200,
+      marginRight:"auto", 
+      width: 900,
+      height: 450,
       marginBottom: 10
     },
     image2:{
@@ -465,6 +490,7 @@ const styles = StyleSheet.create({
     label1:{
      padding: 5,
      fontSize:20
+     
    
     },
     gomb:{
@@ -501,9 +527,10 @@ const styles = StyleSheet.create({
        },
      velemeny:
      {
+       marginTop:10,
        borderWidth:1,
        borderRadius:10,
-       width:270,
+       width:'100%',
        backgroundColor:"white",
         marginLeft:"auto",
         marginRight:"auto"
@@ -514,8 +541,8 @@ const styles = StyleSheet.create({
        padding:10,
        borderWidth:1,
        borderRadius:10,
-       width:200,
-       height:30,
+       width:'90%',
+       height:70,
        backgroundColor:"white",
         marginLeft:"auto",
         marginRight:"auto"
@@ -524,8 +551,8 @@ const styles = StyleSheet.create({
      {padding:10,
        borderWidth:1,
        borderRadius:10,
-       width:200,
-       height:70,
+       width:'90%',
+       height:120,
        backgroundColor:"white",
         marginLeft:"auto",
         marginRight:"auto"
