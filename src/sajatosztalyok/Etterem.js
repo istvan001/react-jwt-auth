@@ -157,7 +157,7 @@ export default class FetchExample extends Component {
         });
       }
       csok = async(szam)=>{
-        return fetch('hhttp://localhost:8080/etterem_abc_csok' )
+        return fetch('http://localhost:8080/etterem_abc_csok' )
         .then((response) => response.json())
         .then((responseJson) => {
           this.setState({
