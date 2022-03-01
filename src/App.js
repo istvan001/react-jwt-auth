@@ -19,6 +19,8 @@ import Etterem from "./sajatosztalyok/Etterem";
 import Adattorles from "./sajatosztalyok/Adattorles";
 import Kommenttorles from "./sajatosztalyok/Kommenttorles";
 import ErtekelesekSzama from "./sajatosztalyok/ErtekelesekSzama";
+import Rendezveny from "./sajatosztalyok/Rendezveny";
+import Rendezvenyfoglalas from "./sajatosztalyok/Rendezveny_foglalas";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -70,6 +72,12 @@ class App extends Component {
           {showAdminBoard && (
           <Nav.Link href="/ErtekelesekSzama">Értékelések Száma</Nav.Link>
           )}
+          {showAdminBoard && (
+          <Nav.Link href="/Rendezvenyfoglalas">Értékelések Száma</Nav.Link>
+          )}
+          
+          <Nav.Link href="/Rendezveny">Rendezvények</Nav.Link>
+         
           {showAdminBoard && (
           <NavDropdown title="Törlés" id="collasible-nav-dropdown">
             <NavDropdown.Item href="/Kommenttorles">Komment törles</NavDropdown.Item>
@@ -217,6 +225,8 @@ class App extends Component {
             <Route path="/Adattorles" component={Adattorles} />
             <Route path="/Kommenttorles" component={Kommenttorles} />
             <Route path="/ErtekelesekSzama" component={ErtekelesekSzama} />
+            <Route path="/Rendezveny" component={Rendezveny} />
+            <Route path="/Rendezvenyfoglalas" component={Rendezvenyfoglalas} />
           </Switch>
         </div>
           </div>

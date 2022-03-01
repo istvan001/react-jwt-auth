@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, StyleSheet, View,Text,TextInput, TouchableOpacity,FlatList,ActivityIndicator } from 'react-native';
+import { StyleSheet, View,Text,FlatList} from 'react-native';
 
 export default class FetchExample extends Component {
 
@@ -32,27 +32,41 @@ export default class FetchExample extends Component {
  
 
   render() {
-
+    
         
     
     return (
-        <View>
-       <FlatList
-        data={this.state.dataSource}
-        renderItem={({item})=>
-        <View>
-        <Text style={{ padding: 5,fontSize:17}}>{item.nev}</Text>
-            <Text style={{padding: 5,fontSize:15,marginLeft:10}}>{item.db}</Text>
-            <Text style={{padding: 5,fontSize:15,marginLeft:10}}>{item.atlag}</Text>
-        </View>
-    
-    
-    
-    }
-        keyExtractor={({Etterem_id}, index) => Etterem_id}
-      />
+       
+       
 
-       </View>
+<View style={{flex: 1, alignItems: "center"}}>
+<FlatList
+  data={this.state.dataSource}
+  renderItem={({item}) => 
+<View> 
+  <View style={styles.card}>
+    
+      <Text style={styles.title}>Étterem neve:{item.nev} </Text>
+     
+      <Text style={styles.title}>Értékelések száma:{item.db} </Text>
+      
+      <Text style={styles.title}>Értékelések átlaga:{item.atlag} </Text>
+    
+  </View>
+  </View>
+
+}
+keyExtractor={({Etterem_id}, index) => Etterem_id}
+numColumns={3}
+/>
+
+</View>
+
+
+    
+    
+    
+ 
 
        
 

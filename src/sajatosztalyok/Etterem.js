@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import { StyleSheet, ActivityIndicator, FlatList, Text, View, Image,TouchableOpacity,TextInput} from 'react-native';
+import { StyleSheet, ActivityIndicator, FlatList, Text, View, Image,TouchableOpacity,TextInput,Dimensions} from 'react-native';
 import ReactStars from 'react-stars';
 import {Collapse,CollapseHeader, CollapseBody} from 'accordion-collapse-react-native';
 
@@ -28,6 +28,7 @@ export default class FetchExample extends Component {
         ert_szam:0
         
         }
+        
     
     
   }
@@ -242,13 +243,14 @@ export default class FetchExample extends Component {
         </View>
       )
     }
-    
+
+    let dimensions = Dimensions.get("window")
    
 
 
     
     return (
-      <View>
+      <View style={{width:Math.round((dimensions.width * 10) / 12) , height:Math.round((dimensions.width * 10) / 16)}}>
       
         <Text style={{fontSize:64,fontStyle:"italic",marginBottom:10}}>Éttermek</Text>
       
@@ -262,27 +264,27 @@ export default class FetchExample extends Component {
           </CollapseHeader>
          
           <CollapseBody>
-            <View style={{marginLeft:10}}>
+            <View style={{marginLeft:10 }}>
           <TouchableOpacity
-              style={{borderWidth:1,borderRadius:10,width:170,height:30,margin:5,backgroundColor:"white"}}
+              style={{borderWidth:1,borderRadius:10,width:170,height:30,margin:5,marginLeft:10,backgroundColor:"white"}}
               onPress={async(szam)=>this.nov()}
               >
             <Text style={{textAlign:"center",fontSize:20}}>Rendezés (ABC)↑</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={{borderWidth:1,borderRadius:10,width:170,height:30,margin:5,backgroundColor:"white"}}
+              style={{borderWidth:1,borderRadius:10,width:170,height:30,margin:5,marginLeft:10,backgroundColor:"white"}}
               onPress={async(szam)=>this.csok()}
               >
             <Text style={{textAlign:"center",fontSize:20}}>Rendezés (ABC)↓</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={{borderWidth:1,borderRadius:10,width:170,height:30,margin:5,backgroundColor:"white"}}
+              style={{borderWidth:1,borderRadius:10,width:170,height:30,margin:5,marginLeft:10,backgroundColor:"white"}}
               onPress={async(szam)=>this.ert()}
               >
             <Text style={{textAlign:"center",fontSize:20}}>Értékelés</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={{borderWidth:1,borderRadius:10,width:170,height:30,margin:5,backgroundColor:"white"}}
+              style={{borderWidth:1,borderRadius:10,width:170,height:30,margin:5,marginLeft:10,backgroundColor:"white"}}
               onPress={async(szam)=>this.alap()}
               >
             <Text style={{textAlign:"center",fontSize:20}}>alap</Text>
@@ -309,7 +311,7 @@ export default class FetchExample extends Component {
          
         <View style={styles.card}>
           <View style={styles.center}>
-            <Image style={styles.image} source={{uri: 'http://localhost:8080/'+item.kep}}/>
+            <Image style={styles.image} style={{height:Math.round((dimensions.width * 4) / 15),width:Math.round((dimensions.width * 9) / 15)}}  source={{uri: 'http://localhost:8080/'+item.kep}}/>
           </View>
           <Text style={styles.title}>{item.nev}</Text>
           <Text style={styles.label}>Cím: {item.lakcim}</Text>
@@ -436,6 +438,8 @@ export default class FetchExample extends Component {
 }
 
 const styles = StyleSheet.create({
+  
+
     loading_content:{
       alignItems: "center",
       padding: 5,
@@ -479,14 +483,11 @@ const styles = StyleSheet.create({
     },
     image:{
       marginRight:"auto", 
-      width: 900,
-      height: 450,
+      resizeMode : 'cover',
       marginBottom: 10
     },
-    image2:{
-      width: 50,
-      height: 50
-    },
+    
+    
     label1:{
      padding: 5,
      fontSize:20
