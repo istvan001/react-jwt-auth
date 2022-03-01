@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { StyleSheet, View,Text,TextInput,Picker, TouchableOpacity,Button} from 'react-native';
-import DatePicker from 'react-native-modern-datepicker';
 
 export default class FetchExample extends Component {
 
@@ -131,11 +130,7 @@ export default class FetchExample extends Component {
         <Text style={styles.label1}>
          Dátum:
         </Text>
-        <DatePicker
-      current="2020-07-13"
-      minimumDate="2020-02-17"
-      maximumDate="2020-07-25"
-    />
+       
         </View>
 
         <TouchableOpacity 

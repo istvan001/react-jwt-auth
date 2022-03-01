@@ -73,7 +73,7 @@ class App extends Component {
           <Nav.Link href="/ErtekelesekSzama">Értékelések Száma</Nav.Link>
           )}
           {showAdminBoard && (
-          <Nav.Link href="/Rendezvenyfoglalas">Értékelések Száma</Nav.Link>
+          <Nav.Link href="/Rendezvenyfoglalas">Foglalások</Nav.Link>
           )}
           
           <Nav.Link href="/Rendezveny">Rendezvények</Nav.Link>
