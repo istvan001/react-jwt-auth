@@ -1,19 +1,26 @@
 import React, { Component } from 'react';
-import { StyleSheet, View,Text,TextInput,Picker, TouchableOpacity,Button} from 'react-native';
-
+import { StyleSheet, View,Text,TextInput,Picker, TouchableOpacity} from 'react-native';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import hu from 'date-fns/locale/hu';
+import { registerLocale, setDefaultLocale } from  "react-datepicker";
+registerLocale('hu', hu)
 export default class FetchExample extends Component {
 
     constructor(props){
       super(props);
-      let dt=new Date();
-  let teljesdat=dt.getFullYear()+"-"+(dt.getMonth()+1)+"-"+dt.getDate();
+      
       this.state ={
         dataSource:[],
         etteremnev:"",
         nev:"",
         telefon:"",
         email:"",
-        date:"2016-05-15"
+        dt:new Date(),
+        datum:dt.getFullYear()+"-"+(dt.getMonth()+1)+"-"+dt.getDate(),
+        valaszt:1
+        
+        
 
         }
     
@@ -38,10 +45,11 @@ export default class FetchExample extends Component {
   felvitel= (szam)=>{
     alert("Megnyomva")
     let bemenet={
-        bevitel4:this.state.date,
-      bevitel1:this.state.nev,
-      bevitel2:this.state.telefon,
-      bevitel3:this.state.email
+      bevitel1:this.state.valaszt,  
+      bevitel2:this.state.nev,
+      bevitel3:this.state.telefon,
+      bevitel4:this.state.email,
+      bevitel5:this.state.datum,
 
     }
   
@@ -55,6 +63,7 @@ export default class FetchExample extends Component {
         
   
         alert(szoveg)
+        
         this.setState({nev:""})
         this.setState({telefon:""})
         this.setState({email:""})
@@ -69,7 +78,7 @@ export default class FetchExample extends Component {
 
   render() {
     
-    const [selectedValue, setSelectedValue]=("java")
+    
     
     
     return (
@@ -80,16 +89,16 @@ export default class FetchExample extends Component {
         Válassza ki az Éttermet:
         </Text>
         <Picker
-        selectedValue={this.state.dataSource}
-        style={{ height: 30, width: 200,marginLeft:10,marginBottom:10 }}
-        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-      >        
-          <Picker.Item label="" />    
-         
-        
-          
+        selectedValue={this.state.valaszt}
+        style={{ height: 30, width: 200 ,textAlign:'center', marginLeft:10,marginBottom:10}}
+        onValueChange={(itemValue, itemIndex) => this.setState({valaszt:itemValue})}
+      >
+        {this.state.dataSource.map((item) => (
+          <Picker.Item key={item.id} label={item.nev} value={item.id} />
+        ))}
+       
+       
       </Picker>
-
 
         </View>
         
@@ -127,9 +136,16 @@ export default class FetchExample extends Component {
           value={this.state.email}
         /></View>
         <View style={{flexDirection:"row"}}>
-        <Text style={styles.label1}>
+        <Text style={styles.label1} style={{marginRight:10}}>
          Dátum:
         </Text>
+        <DatePicker
+        selected={this.state.dt} 
+        onChange={(newdate) => this.setState({dt:newdate})}
+        locale="hu"
+        
+
+         />
        
         </View>
 
@@ -143,25 +159,6 @@ export default class FetchExample extends Component {
         
 
       </View>
-        
-
-       
-
-
-
-
-       
-        
-
-        
-        
-
-
-
-
-
-
-
     );
   }
 }
