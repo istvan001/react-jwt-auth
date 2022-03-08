@@ -17,7 +17,8 @@ export default class FetchExample extends Component {
         telefon:"",
         email:"",
         dt:new Date(),
-        datum:dt.getFullYear()+"-"+(dt.getMonth()+1)+"-"+dt.getDate(),
+        datum:"",
+        kecske:[],
         valaszt:1
         
         
@@ -49,7 +50,7 @@ export default class FetchExample extends Component {
       bevitel2:this.state.nev,
       bevitel3:this.state.telefon,
       bevitel4:this.state.email,
-      bevitel5:this.state.datum,
+      bevitel5:this.state.dt,
 
     }
   
@@ -73,14 +74,14 @@ export default class FetchExample extends Component {
       });       
     }
     
+    
 
  
 
   render() {
     
     
-    
-    
+
     return (
         <View style={styles.container}>
          <View style={{flexDirection:"row"}}>

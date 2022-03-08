@@ -46,21 +46,7 @@ export default class FetchExample extends Component {
        console.error(error);
      });
 
-     fetch('http://localhost:8080/velemenyek')
-     .then((response) => response.json())
-     .then((responseJson) => {
-       this.setState({
-         isLoading: false,
-         dataSource2: responseJson,
-       }, function(){          
-     });
-   })
-     .catch((error) =>{
-       console.error(error);
-     });
-
-
-     this.setState()
+     
 
     }
 
@@ -103,12 +89,44 @@ export default class FetchExample extends Component {
           this.frissit()
     
           alert(szoveg)
+
         })
         .catch((error) =>{
           console.error(error);
         });       
       }
+  
+  
+  velemeny =(szam)=>
+  
+  {
+    
+    
+    let bemenet={
+      bevitel1:szam
       
+    }
+  
+    fetch('http://localhost:8080/velemenyek' ,{
+      method: "POST",
+      body: JSON.stringify(bemenet),
+      headers: {"Content-type": "application/json; charset=UTF-8"}
+      } )
+      .then((response) => response.json())
+      .then((adat) => {
+       
+  
+        
+        this.setState({
+          isLoading: false,
+          dataSource2: adat,
+        }, function(){          
+      });
+      })
+      .catch((error) =>{
+        console.error(error);
+      });       
+    }
     
     
       vfelvitel=async (szam)=>{
@@ -343,7 +361,7 @@ export default class FetchExample extends Component {
             
 
           >
-          <CollapseHeader style={styles.gomb}>
+          <CollapseHeader style={styles.gomb}  onClick={ ()=>this.velemeny(item.id)}>
             <View>
             
                 <Text style={styles.label1}>Vélemények</Text>
