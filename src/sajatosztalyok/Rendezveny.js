@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component} from 'react';
 import { StyleSheet, View,Text,TextInput,Picker, TouchableOpacity} from 'react-native';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import hu from 'date-fns/locale/hu';
-import { registerLocale, setDefaultLocale } from  "react-datepicker";
+import { registerLocale, setDefaultLocale ,CalendarContainer} from  "react-datepicker";
 registerLocale('hu', hu)
 export default class FetchExample extends Component {
 
@@ -79,7 +79,20 @@ export default class FetchExample extends Component {
  
 
   render() {
+
     
+    const MyContainer = ({ className, children }) => {
+
+
+      return (
+        <div style={{ padding:10,color: "black",margin:10,backgroundColor:'lightblue' }}>
+          <CalendarContainer className={className}>
+           
+            <div style={{margin:2}} >{children}</div>
+          </CalendarContainer>
+        </div>
+      );
+    };
     
 
     return (
@@ -143,7 +156,16 @@ export default class FetchExample extends Component {
         <DatePicker
         selected={this.state.dt} 
         onChange={(newdate) => this.setState({dt:newdate})}
+        minDate={new Date()}
         locale="hu"
+        dateFormat="yyyy/MM/dd"
+        showMonthDropdown
+      showYearDropdown
+      dropdownMode="select"
+        calendarContainer={MyContainer}
+        withPortal
+       
+     
         
 
          />
