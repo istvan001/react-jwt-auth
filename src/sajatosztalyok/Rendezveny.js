@@ -17,7 +17,7 @@ export default class FetchExample extends Component {
         telefon:"",
         email:"",
         dt:new Date(),
-        datum:"",
+        
         kecske:[],
         valaszt:1
         
@@ -41,16 +41,20 @@ export default class FetchExample extends Component {
      .catch((error) =>{
        console.error(error);
      });
+     
 
   }
   felvitel= (szam)=>{
-    alert("Megnyomva")
+    alert("sikeres kitöltés")
+    this.setState({teljesdat:this.state.dt.getFullYear()+"/"+(this.state.dt.getMonth()+1)+"/"+this.state.dt.getDate()})
+    
+    
     let bemenet={
       bevitel1:this.state.valaszt,  
       bevitel2:this.state.nev,
       bevitel3:this.state.telefon,
       bevitel4:this.state.email,
-      bevitel5:this.state.dt,
+      bevitel5:this.state.teljesdat,
 
     }
   
@@ -68,6 +72,7 @@ export default class FetchExample extends Component {
         this.setState({nev:""})
         this.setState({telefon:""})
         this.setState({email:""})
+        this.setState({dt:new Date()})
       })
       .catch((error) =>{
         console.error(error);
