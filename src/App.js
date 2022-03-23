@@ -69,9 +69,9 @@ class App extends Component {
           {showAdminBoard && (
           <Nav.Link href="/Proba">Feltöltés</Nav.Link>
           )}
-          {showAdminBoard && (
+          {/*{showAdminBoard && (
           <Nav.Link href="/ErtekelesekSzama">Értékelések Száma</Nav.Link>
-          )}
+          )}*/}
           {showAdminBoard && (
           <Nav.Link href="/Rendezvenyfoglalas">Foglalások</Nav.Link>
           )}
