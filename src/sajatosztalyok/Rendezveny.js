@@ -44,6 +44,8 @@ export default class FetchExample extends Component {
      
 
   }
+
+  
   felvitel= (szam)=>{
     alert("sikeres kitöltés")
     this.setState({teljesdat:this.state.dt.getFullYear()+"/"+(this.state.dt.getMonth()+1)+"/"+this.state.dt.getDate()})
@@ -154,6 +156,7 @@ export default class FetchExample extends Component {
           onChangeText={(email) => this.setState({email})}
           value={this.state.email}
         /></View>
+        
         <View style={{flexDirection:"row"}}>
         <Text style={styles.label1} style={{marginRight:10}}>
          Dátum:
@@ -169,13 +172,16 @@ export default class FetchExample extends Component {
       dropdownMode="select"
         calendarContainer={MyContainer}
         withPortal
+        portalId="root-portal"
+        
        
      
         
 
          />
+         </View>
        
-        </View>
+        
 
         <TouchableOpacity 
                   onPress={()=>this.felvitel()}>
