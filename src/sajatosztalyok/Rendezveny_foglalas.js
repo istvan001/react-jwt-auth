@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Button, StyleSheet, View,Text, TextInput, TouchableOpacity,FlatList } from 'react-native';
+import { Button, StyleSheet, View,Text, TextInput, TouchableOpacity,FlatList,Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Checkbox from 'expo-checkbox';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import hu from 'date-fns/locale/hu';
+import { AiOutlineSearch } from "react-icons/ai";
 import { registerLocale, setDefaultLocale ,CalendarContainer} from  "react-datepicker";
 registerLocale('hu', hu)
 
@@ -68,6 +69,37 @@ export default class ButtonBasics extends Component {
     }
   
     fetch('http://localhost:8080/szemelykereso' ,{
+      method: "POST",
+      body: JSON.stringify(bemenet),
+      headers: {"Content-type": "application/json; charset=UTF-8"}
+      } )
+      .then((response) => response.json())
+      .then((adat) => {
+       
+  
+        
+        this.setState({
+          isLoading: false,
+          dataSource: adat,
+        }, function(){          
+      });
+      })
+      .catch((error) =>{
+        console.error(error);
+      });       
+    }
+
+    datumkereso =()=>
+  
+  {
+    
+    this.setState({teljesdat:this.state.dt.getFullYear()+"/"+(this.state.dt.getMonth()+1)+"/"+this.state.dt.getDate()})
+    let bemenet={
+      bevitel1:this.state.teljesdat
+      
+    }
+  
+    fetch('http://localhost:8080/datumkereso' ,{
       method: "POST",
       body: JSON.stringify(bemenet),
       headers: {"Content-type": "application/json; charset=UTF-8"}
@@ -184,32 +216,36 @@ export default class ButtonBasics extends Component {
       <View style={styles.container}>
 {/*---------------------------------------------------------------------feladat */}
       <Text style={{padding: 10, fontSize: 30}}>
-          Feladat:
+          Rendezvény foglalások:
         </Text>
         <View style={{flexDirection:"row"}}>
         <TextInput
-          style={{height: 40,flex:8,margin:10}}
+          style={{height: 40,flex:8,margin:10,borderRadius:10,paddingLeft:10,borderWidth:1}}
           placeholder="Írd be a feladat a keresendő személy nevét!"
           onChangeText={(szoveg) => this.setState({nev:szoveg})}
           value={this.state.nev}
         />
         <TouchableOpacity
-        style={{width:30,height:30,backgroundColor:"brown",flex:1,margin:10}}
+        style={{backgroundColor:"lightblue",borderRadius:10,marginVertical:5}}
         onPress={()=>this.szemelykereso()}
+        onPress={()=>this.datumkereso()}
+
       >
-        <Text style={{textAlign:"center",color:"white"}}>X</Text>
+        
+       <AiOutlineSearch  style={{height:50,width:50}}/>
+        
       </TouchableOpacity>
       </View>
+      
 
-       
         
 
 
-<View style={{alignItems:"center"}}>
+<View style={{marginTop:20,marginBottom:10,alignItems:"center"}}>
+<Text style={{marginBottom:5,fontSize:20}}>Válaszd ki a dátumot: </Text>
   <DatePicker
         selected={this.state.dt} 
         onChange={(newdate) => this.setState({dt:newdate})}
-        minDate={new Date()}
         locale="hu"
         dateFormat="yyyy/MM/dd"
         showMonthDropdown
@@ -218,31 +254,18 @@ export default class ButtonBasics extends Component {
         calendarContainer={MyContainer}
         withPortal
         portalId="root-portal"
+        
        
      
         
 
-         /></View>
+         />
+         
+         </View>
 
 
-      <View style={{flexDirection:"row"}}>
-      <View style={{flexDirection:"row",  flex:8,marginLeft:20}}>
-      <Checkbox
-          style={{color:"black"}}
-          value={this.state.pipa}
-          onValueChange={()=>this.pipavalto()}
-          
-        />
-        <Text style={{}}> korábbiak</Text>
-        </View>
-        <TouchableOpacity
-        style={{flex:3,zIndex:1}}
-        onPress={()=>this.mindentorles()}
-      >
-        <Text style={styles.mindtor}>Minden törlése</Text>
-      </TouchableOpacity>
-      </View>
-
+      
+      
 {/*------------------------------------------------------------------Feladatok alul */}       
       <FlatList
             data={this.state.dataSource}
@@ -251,13 +274,16 @@ export default class ButtonBasics extends Component {
               <View>
               { this.state.pipa || !item.kesz 
                 ?
-              <View style={{margin:10,borderWidth:1,padding:10}}>
+              <View style={{margin:10,borderWidth:1,padding:10,borderRadius:10}}>
 
               <Text style={{fontSize:25}}>Étterem neve: {item.nev}</Text>
               <Text style={{fontSize:15}}>Felhasználó neve: {item.felhasznalo}</Text>
               <Text style={{fontSize:15}}>Felhasználó telefonszáma: {item.telefon}</Text>
               <Text style={{fontSize:15}}>Felhasználó E-mail címe: {item.email}</Text>
-              <Text style={{fontSize:15}}>Időpont: {item.idopont}</Text>
+              <Text style={{fontSize:15,marginBottom:10}}>Időpont: {item.idopont}</Text>
+
+
+
               <TouchableOpacity
         style={{width:120}}
         onPress={ ()=>this.kesz(item.id)}>
@@ -265,7 +291,7 @@ export default class ButtonBasics extends Component {
         {item.foglalt ? 
         <Text style={{backgroundColor:"grey",borderRadius:10,padding:10,textAlign:"center"}}>Töröl</Text>
           :
-        <Text style={{backgroundColor:"orange",borderRadius:10,padding:10,textAlign:"center"}}>Kész</Text>
+        <Text style={{backgroundColor:"orange",borderRadius:10,padding:10,textAlign:"center"}}>Foglalt</Text>
         }
       
       </TouchableOpacity>
@@ -308,7 +334,9 @@ const styles = StyleSheet.create({
     width:150,
     borderRadius:10,
     padding:10,
-    margin:5,
+    marginLeft:"auto",
+    marginRight:10,
+    marginTop:10,
     color:"white"
 }
 });
