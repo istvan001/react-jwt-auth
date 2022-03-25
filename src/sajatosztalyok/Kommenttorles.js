@@ -16,7 +16,7 @@ export default class FetchExample extends Component {
 
   frissit=()=>
   {
-    fetch('http://localhost:8080/velemenyek')
+    fetch('http://localhost:8080/velemenyek2')
      .then((response) => response.json())
      .then((responseJson) => {
        this.setState({

@@ -35,11 +35,19 @@ export default class ButtonBasics extends Component {
     fetch('http://localhost:8080/rendezveny')
      .then((response) => response.json())
      .then((responseJson) => {
+
+
        this.setState({
          isLoading: false,
          dataSource: responseJson,
        }, function(){
        });
+
+
+
+
+
+
      })
      .catch((error) =>{
        console.error(error);
@@ -93,7 +101,8 @@ export default class ButtonBasics extends Component {
   
   {
     
-    this.setState({teljesdat:this.state.dt.getFullYear()+"/"+(this.state.dt.getMonth()+1)+"/"+this.state.dt.getDate()})
+    this.state.teljesdat=this.state.dt.getFullYear()+"/"+(this.state.dt.getMonth()+1)+"/"+this.state.dt.getDate()
+    alert(this.state.teljesdat)
     let bemenet={
       bevitel1:this.state.teljesdat
       
@@ -185,18 +194,7 @@ export default class ButtonBasics extends Component {
     alert(JSON.stringify(this.state.data))
   }
 
-  valtoztatdate=(event,datum0)=>{
-    //alert("barmi")
-    this.setState({show:false})
-    let dt=new Date();
-    dt= datum0   ||  this.state.date;
-    let teljesdat=dt.getFullYear()+"/"+(dt.getMonth()+1)+"/"+dt.getDate();
   
-    this.setState({date:dt})
-    this.setState({datum:teljesdat})
-
-
-  }
 
   render() {
     const MyContainer = ({ className, children }) => {
@@ -228,7 +226,7 @@ export default class ButtonBasics extends Component {
         <TouchableOpacity
         style={{backgroundColor:"lightblue",borderRadius:10,marginVertical:5}}
         onPress={()=>this.szemelykereso()}
-        onPress={()=>this.datumkereso()}
+        
 
       >
         
@@ -263,6 +261,18 @@ export default class ButtonBasics extends Component {
          
          </View>
 
+         <TouchableOpacity
+        style={{backgroundColor:"lightblue",borderRadius:10,marginVertical:5}}
+        
+        onPress={()=>this.datumkereso()}
+        
+
+      >
+        
+       <AiOutlineSearch  style={{height:50,width:50}}/>
+        
+      </TouchableOpacity>
+
 
       
       
@@ -272,15 +282,14 @@ export default class ButtonBasics extends Component {
             keyExtractor={({ id }, index) => id}
             renderItem={({ item }) => (
               <View>
-              { this.state.pipa || !item.kesz 
-                ?
+              
               <View style={{margin:10,borderWidth:1,padding:10,borderRadius:10}}>
 
               <Text style={{fontSize:25}}>Étterem neve: {item.nev}</Text>
               <Text style={{fontSize:15}}>Felhasználó neve: {item.felhasznalo}</Text>
               <Text style={{fontSize:15}}>Felhasználó telefonszáma: {item.telefon}</Text>
               <Text style={{fontSize:15}}>Felhasználó E-mail címe: {item.email}</Text>
-              <Text style={{fontSize:15,marginBottom:10}}>Időpont: {item.idopont}</Text>
+              <Text style={{fontSize:15,marginBottom:10}}>Időpont: {item.idopont.split('T')[0]}</Text>
 
 
 
@@ -296,10 +305,9 @@ export default class ButtonBasics extends Component {
       
       </TouchableOpacity>
               </View>
-              :
-              null
+              
 
-      }
+      
       </View>
 
 
