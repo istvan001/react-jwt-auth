@@ -41,14 +41,25 @@ export default class FetchExample extends Component {
      .catch((error) =>{
        console.error(error);
      });
-     
+     fetch('http://localhost:8080/rendezveny')
+     .then((response) => response.json())
+     .then((responseJson) => {
+       this.setState({
+         isLoading: false,
+         dataSource: responseJson,
+       }, function(){
+       });
+     })
+     .catch((error) =>{
+       console.error(error);
+     });
 
   }
 
   
   felvitel= (szam)=>{
     alert("sikeres kitöltés")
-    this.setState({teljesdat:this.state.dt.getFullYear()+"/"+(this.state.dt.getMonth()+1)+"/"+this.state.dt.getDate()})
+    this.state.teljesdat=this.state.dt.getFullYear()+"/"+(this.state.dt.getMonth()+1)+"/"+this.state.dt.getDate()
     
     
     let bemenet={
@@ -184,7 +195,13 @@ export default class FetchExample extends Component {
         
 
         <TouchableOpacity 
-                  onPress={()=>this.felvitel()}>
+        
+         
+                  onPress={()=>this.felvitel()}
+                  
+                  
+                  
+         >
                     <View style={{width:200,backgroundColor:"lightgrey",marginTop:10,borderRadius:5}}>
                       <Text style={{textAlign:"center",padding:10 }}>Felvitel</Text>
                     </View>
