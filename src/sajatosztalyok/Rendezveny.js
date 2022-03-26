@@ -3,7 +3,7 @@ import { StyleSheet, View,Text,TextInput,Picker, TouchableOpacity} from 'react-n
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import hu from 'date-fns/locale/hu';
-import { registerLocale, setDefaultLocale ,CalendarContainer} from  "react-datepicker";
+import { registerLocale,CalendarContainer} from  "react-datepicker";
 registerLocale('hu', hu)
 export default class FetchExample extends Component {
 
@@ -12,6 +12,7 @@ export default class FetchExample extends Component {
       
       this.state ={
         dataSource:[],
+        dataSource2:[],
         etteremnev:"",
         nev:"",
         telefon:"",
@@ -41,12 +42,12 @@ export default class FetchExample extends Component {
      .catch((error) =>{
        console.error(error);
      });
-     fetch('http://localhost:8080/rendezveny')
+     fetch('http://localhost:8080/rendezveny2')
      .then((response) => response.json())
      .then((responseJson) => {
        this.setState({
          isLoading: false,
-         dataSource: responseJson,
+         dataSource2: responseJson,
        }, function(){
        });
      })
@@ -92,6 +93,14 @@ export default class FetchExample extends Component {
       });       
     }
     
+    kivizsgal=()=>
+    {
+       
+      
+         
+         
+       
+    }
     
 
  
@@ -197,7 +206,7 @@ export default class FetchExample extends Component {
         <TouchableOpacity 
         
          
-                  onPress={()=>this.felvitel()}
+                  onPress={()=>this.kivizsgal()}
                   
                   
                   
