@@ -262,14 +262,14 @@ export default class ButtonBasics extends Component {
          </View>
 
          <TouchableOpacity
-        style={{backgroundColor:"lightblue",borderRadius:10,marginVertical:5}}
+        style={{backgroundColor:"lightblue",borderRadius:10,marginVertical:5, alignItems:'center'}}
         
         onPress={()=>this.datumkereso()}
         
 
       >
         
-       <AiOutlineSearch  style={{height:50,width:50}}/>
+       <Text style={{fontSize:40}}>Dátum szerint keresés </Text>
         
       </TouchableOpacity>
 

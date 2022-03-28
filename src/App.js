@@ -60,11 +60,15 @@ class App extends Component {
         Éttermek
       </Navbar.Brand>
 
+      
+
 
      
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+      
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
+        <Nav.Link href="/Rendezveny">Rendezvények</Nav.Link>
           {/*<Nav.Link href="/Etterem">Étterem</Nav.Link>*/}
           {showAdminBoard && (
           <Nav.Link href="/Proba">Feltöltés</Nav.Link>
@@ -76,7 +80,7 @@ class App extends Component {
           <Nav.Link href="/Rendezvenyfoglalas">Foglalások</Nav.Link>
           )}
           
-          <Nav.Link href="/Rendezveny">Rendezvények</Nav.Link>
+          
          
           {showAdminBoard && (
           <NavDropdown title="Törlés" id="collasible-nav-dropdown">

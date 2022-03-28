@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import hu from 'date-fns/locale/hu';
 import { registerLocale,CalendarContainer} from  "react-datepicker";
+import { Last } from 'react-bootstrap/esm/PageItem';
 registerLocale('hu', hu)
 export default class FetchExample extends Component {
 
@@ -12,7 +13,7 @@ export default class FetchExample extends Component {
       
       this.state ={
         dataSource:[],
-        dataSource2:[],
+        dataSource2:1,
         etteremnev:"",
         nev:"",
         telefon:"",
@@ -42,18 +43,7 @@ export default class FetchExample extends Component {
      .catch((error) =>{
        console.error(error);
      });
-     fetch('http://localhost:8080/rendezveny2')
-     .then((response) => response.json())
-     .then((responseJson) => {
-       this.setState({
-         isLoading: false,
-         dataSource2: responseJson,
-       }, function(){
-       });
-     })
-     .catch((error) =>{
-       console.error(error);
-     });
+     
 
   }
 
@@ -95,6 +85,54 @@ export default class FetchExample extends Component {
     
     kivizsgal=()=>
     {
+      
+
+
+      const nev=this.state.nev
+      const telefon=this.state.telefon
+      const email=this.state.email
+       if ( nev == "" || telefon =="" || email =="") {
+         alert("Minden mezőt tölts ki")
+       } else {
+        {
+          
+          this.state.teljesdat=this.state.dt.getFullYear()+"/"+(this.state.dt.getMonth()+1)+"/"+this.state.dt.getDate()
+          
+          let bemenet={
+            bevitel1:this.state.teljesdat
+            
+          }
+        
+          fetch('http://localhost:8080/rendezveny2' ,{
+            method: "POST",
+            body: JSON.stringify(bemenet),
+            headers: {"Content-type": "application/json; charset=UTF-8"}
+            } )
+            .then((response) => response.json())
+            .then((adat) => {   
+              
+              this.setState({
+                isLoading: false,
+                dataSource2: adat,
+              }, function(){          
+            });
+            })
+            .catch((error) =>{
+              console.error(error);
+            });       
+          }
+  
+        
+          if(this.state.dataSource2==1)
+          {
+            alert("Ebben az időpontban nem lehet foglalni")
+          }
+          else
+          {
+            this.felvitel()
+          }
+
+       }
        
       
          

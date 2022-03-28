@@ -214,21 +214,7 @@ export default class FetchExample extends Component {
           <Text style={styles.label}>Nyitvatartás: {"\n"}{item.nyitas}</Text>
           <Text style={styles.label}>Telefon: {item.telefon}</Text>
           <Text style={styles.label1}>Értékelés: {Math.round((item.atlag + Number.EPSILON) * 100) / 100}/5</Text> 
-          <Text style={styles.label1}>Értékeld:</Text>  
-
-          <TouchableOpacity
-          onPress={ ()=>this.kattintas(item.id)}
-
-          style={{alignItems:"center"}}
-          >
-          <ReactStars
-            count={5}
-            half={false}
-            onChange={ratingChanged}
-            size={32}
-            color2={'#ffd700'} />
-     
-          </TouchableOpacity>
+          
 
           <TouchableOpacity style={styles.gomb} onPress={ ()=>this.torles(item.id)} >
             Törlés
