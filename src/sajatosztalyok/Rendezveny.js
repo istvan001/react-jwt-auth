@@ -13,7 +13,7 @@ export default class FetchExample extends Component {
       
       this.state ={
         dataSource:[],
-        dataSource2:1,
+        dataSource2:[],
         etteremnev:"",
         nev:"",
         telefon:"",
@@ -94,8 +94,8 @@ export default class FetchExample extends Component {
        if ( nev == "" || telefon =="" || email =="") {
          alert("Minden mezőt tölts ki")
        } else {
-        {
-          
+        
+          {
           this.state.teljesdat=this.state.dt.getFullYear()+"/"+(this.state.dt.getMonth()+1)+"/"+this.state.dt.getDate()
           
           let bemenet={
@@ -111,6 +111,7 @@ export default class FetchExample extends Component {
             .then((response) => response.json())
             .then((adat) => {   
               
+              
               this.setState({
                 isLoading: false,
                 dataSource2: adat,
@@ -119,19 +120,24 @@ export default class FetchExample extends Component {
             })
             .catch((error) =>{
               console.error(error);
-            });       
+            });   
+          }    
+          const elem=this.state.dataSource2
+          for (let index = 0; index < elem.length; index++) {
+            console.log(index)
+            
           }
-  
-        
-          if(this.state.dataSource2==1)
-          {
-            alert("Ebben az időpontban nem lehet foglalni")
-          }
-          else
-          {
-            this.felvitel()
-          }
+          
+          this.setState({dataSource2:[]})
+            /*if(elem==0)
+            {
+              this.felvitel()
 
+            }
+            else
+            {
+              alert("Ez az időpont már foglalt")
+            }*/
        }
        
       
