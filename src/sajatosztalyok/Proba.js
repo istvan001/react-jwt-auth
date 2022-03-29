@@ -17,7 +17,7 @@ export default class ButtonBasics extends Component {
   render() {
     return (
       <View>
-        <View style={{flexDirection:"row"}}>
+        <View style={{flexDirection : "row", flexWrap : "wrap"}}>
         <Text style={styles.label1}>
          Étterem Néve:
         </Text>
@@ -28,7 +28,7 @@ export default class ButtonBasics extends Component {
           value={this.state.etteremnev}
         /></View>
 
-        <View style={{flexDirection:"row"}}>
+        <View style={{flexDirection : "row", flexWrap : "wrap"}}>
         <Text style={styles.label1}>
          Étterem lakcíme:
         </Text>
@@ -39,7 +39,7 @@ export default class ButtonBasics extends Component {
           value={this.state.lakcim}
         /></View>
 
-        <View style={{flexDirection:"row"}}>
+        <View style={{flexDirection : "row", flexWrap : "wrap"}}>
         <Text style={styles.label1}>
          Étterem telefonszáma:
         </Text>
@@ -49,8 +49,8 @@ export default class ButtonBasics extends Component {
           onChangeText={(telefon) => this.setState({telefon})}
           value={this.state.telefon}
         /></View>
-        <View style={{flexDirection:"row"}}>
-        <Text style={styles.label1}>
+        <View style={{flexDirection : "row", flexWrap : "wrap"}}>
+        <Text style={styles.label1} style={{marginRight:750}}>
          Étterem nyitvatartási ideje:
         </Text>
         <TextInput
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     borderWidth:1,
     borderRadius:10,
     marginBottom:5,
-    width:250,
+    width:200,
     height:30,
     backgroundColor:"white",
      marginLeft:"auto",

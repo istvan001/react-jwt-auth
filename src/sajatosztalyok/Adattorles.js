@@ -169,7 +169,7 @@ export default class FetchExample extends Component {
     
     return (
       <View>
-        <View style={{flexDirection:"row"}}>
+        <View style={{flexDirection : "row", flexWrap : "wrap", justifyContent:'center'}}>
       <Text style={{fontSize:64,fontStyle:"italic",margin:10,marginLeft:40}} >Éttermek:</Text>
 
       <View style={{borderWidth:1,borderRadius:10,padding: 10,alignItems:"center",borderRadius:20,marginLeft:"auto",marginRight:"auto",width:400}}>
