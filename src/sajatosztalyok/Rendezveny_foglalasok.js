@@ -30,41 +30,37 @@ export default class ButtonBasics extends Component {
 
     };
   }
-
-  componentDidMount(){
+  frissit=()=>
+  {
     fetch('http://localhost:8080/rendezveny')
-     .then((response) => response.json())
-     .then((responseJson) => {
+    .then((response) => response.json())
+    .then((responseJson) => {
 
 
-       this.setState({
-         isLoading: false,
-         dataSource: responseJson,
-       }, function(){
-       });
-
-
-
+      this.setState({
+        isLoading: false,
+        dataSource: responseJson,
+      }, function(){
+      });
 
 
 
-     })
-     .catch((error) =>{
-       console.error(error);
-     });
 
 
-
-    //this.storeData([])
-    this.getData().then(data0=>{
-      console.log(data0)
-
-      this.setState({data:data0})
-      
 
     })
+    .catch((error) =>{
+      console.error(error);
+    });
+
+
+
+
+  }
+
+  componentDidMount(){
+    this.frissit()
     
-    //alert("valami")
   }
   szemelykereso =()=>
   
@@ -128,71 +124,40 @@ export default class ButtonBasics extends Component {
         console.error(error);
       });       
     }
-//------------------------------------------------------------------felvitel 
-  felvitel=()=> {
-    //alert('You tapped the button!')
-    let uj=this.state.data
-    if (uj==null)
-      uj=[]
 
-    let hanyadik=uj.length;
-    uj.push({
-      "id":hanyadik+1,
-      "feladat":this.state.feladat,
-      "datum":this.state.datum,
-      "kesz":0
-    })
-
-    function custom_sort(a, b) {
-      return new Date(a.lastUpdated).getTime() - new Date(b.lastUpdated).getTime();
-  }
-    let rendezett=uj.sort(custom_sort);
-
-    this.setState({data: rendezett     })
-    this.storeData(this.state.data)
-    alert(JSON.stringify(this.state.data))
-
-  }
-
-  storeData = async (value) =>
-   {  try {    const jsonValue = JSON.stringify(value)  
-      await AsyncStorage.setItem('@storage_Key', jsonValue) 
-     } catch (e) 
-     { 
-           }}
- 
-
-  getData = async () => 
-  {  try {   
-     const jsonValue = await AsyncStorage.getItem('@storage_Key') 
-        return jsonValue != null ? JSON.parse(jsonValue) : null;  
-      } catch(e)
-       {      }}         
-
-  mindentorles=()=>{
-    //alert("mindent töröl")
-    this.setState({data:[]})
-    this.storeData([])
-
-  }
-
-  pipavalto=()=>{
-    this.setState({pipa:!this.state.pipa})
-  }
-
-
-  kesz=(aktid)=>{
-    let uj=this.state.data;
-    for (let i=0;i<uj.length;i++){
-        if (uj[i].id==aktid){
-          uj[i].kesz=1-uj[i].kesz;
-          break;
-        }
+    torles=(szam)=>
+  {
+    alert("Megnyomva")
+    let bemenet={
+      bevitel1:szam,
+      
     }
-    this.setState({data:uj})
-    this.storeData(this.state.data)
-    alert(JSON.stringify(this.state.data))
-  }
+  
+    fetch('http://localhost:8080/rendezvenytorles' ,{
+      method: "POST",
+      body: JSON.stringify(bemenet),
+      headers: {"Content-type": "application/json; charset=UTF-8"}
+      } )
+      .then((response) => response.text())
+      .then((szoveg) => {
+        this.frissit()
+  
+        alert(szoveg)
+      })
+      .catch((error) =>{
+        console.error(error);
+      });       
+    }
+
+
+  
+
+       
+
+
+
+
+ 
 
   
 
@@ -295,13 +260,11 @@ export default class ButtonBasics extends Component {
 
               <TouchableOpacity
         style={{width:120}}
-        onPress={ ()=>this.kesz(item.id)}>
+        onPress={ ()=>this.torles(item.rendezveny_id)}>
         
-        {item.foglalt ? 
-        <Text style={{backgroundColor:"grey",borderRadius:10,padding:10,textAlign:"center"}}>Töröl</Text>
-          :
-        <Text style={{backgroundColor:"orange",borderRadius:10,padding:10,textAlign:"center"}}>Foglalt</Text>
-        }
+        
+        <Text style={{backgroundColor:"grey",borderRadius:10,padding:10,textAlign:"center"}}>Törlés</Text>
+        
       
       </TouchableOpacity>
               </View>

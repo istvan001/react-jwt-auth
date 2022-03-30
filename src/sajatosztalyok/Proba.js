@@ -16,8 +16,11 @@ export default class ButtonBasics extends Component {
 
   render() {
     return (
-      <View>
-        <View style={{flexDirection : "row", flexWrap : "wrap"}}>
+      
+      <View >
+        <Text style={{fontSize:34,marginBottom:10}} >Étterem Adatok feltölése </Text>
+        
+        <View style={{flexDirection : "row"}}>
         <Text style={styles.label1}>
          Étterem Néve:
         </Text>
@@ -28,7 +31,7 @@ export default class ButtonBasics extends Component {
           value={this.state.etteremnev}
         /></View>
 
-        <View style={{flexDirection : "row", flexWrap : "wrap"}}>
+        <View style={{flexDirection : "row"}}>
         <Text style={styles.label1}>
          Étterem lakcíme:
         </Text>
@@ -39,7 +42,7 @@ export default class ButtonBasics extends Component {
           value={this.state.lakcim}
         /></View>
 
-        <View style={{flexDirection : "row", flexWrap : "wrap"}}>
+        <View style={{flexDirection : "row"}}>
         <Text style={styles.label1}>
          Étterem telefonszáma:
         </Text>
@@ -49,8 +52,8 @@ export default class ButtonBasics extends Component {
           onChangeText={(telefon) => this.setState({telefon})}
           value={this.state.telefon}
         /></View>
-        <View style={{flexDirection : "row", flexWrap : "wrap"}}>
-        <Text style={styles.label1} style={{marginRight:750}}>
+        <View style={{flexDirection : "row"}}>
+        <Text style={styles.label1} >
          Étterem nyitvatartási ideje:
         </Text>
         <TextInput
@@ -60,6 +63,7 @@ export default class ButtonBasics extends Component {
           value={this.state.nyitas}
         />
         </View>
+        
         
 
       <FileUpload  etteremnev={this.state.etteremnev} lakcim={this.state.lakcim} telefon={this.state.telefon} nyitas={this.state.nyitas} >
@@ -78,10 +82,10 @@ const styles = StyleSheet.create({
     borderWidth:1,
     borderRadius:10,
     marginBottom:5,
-    width:200,
+    width:350,
     height:30,
     backgroundColor:"white",
      marginLeft:"auto",
-     marginRight:700
+     marginRight:600
   }
 });

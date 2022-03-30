@@ -169,6 +169,7 @@ export default class FetchExample extends Component {
     
     return (
       <View>
+        <Text style={{fontSize:34}}>Éttermek törlése:</Text>
         <View style={{flexDirection : "row", flexWrap : "wrap", justifyContent:'center'}}>
       <Text style={{fontSize:64,fontStyle:"italic",margin:10,marginLeft:40}} >Éttermek:</Text>
 

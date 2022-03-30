@@ -97,6 +97,7 @@ export default class FetchExample extends Component {
     
     return (
         <View>
+          <Text style={{fontSize:34}}>A Vélemények törlése:</Text>
         <View style={{borderWidth:1,borderRadius:10,padding: 10,alignItems:"center",borderRadius:20,marginLeft:"auto",marginRight:"auto",width:400}}>
         
        <Text>Kereső mező</Text>

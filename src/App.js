@@ -20,7 +20,7 @@ import Adattorles from "./sajatosztalyok/Adattorles";
 import Kommenttorles from "./sajatosztalyok/Kommenttorles";
 import ErtekelesekSzama from "./sajatosztalyok/ErtekelesekSzama";
 import Rendezveny from "./sajatosztalyok/Rendezveny";
-import Rendezvenyfoglalas from "./sajatosztalyok/Rendezveny_foglalas";
+import Rendezvenyfoglalas from "./sajatosztalyok/Rendezveny_foglalasok";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -77,7 +77,7 @@ class App extends Component {
           <Nav.Link href="/ErtekelesekSzama">Értékelések Száma</Nav.Link>
           )}*/}
           {showAdminBoard && (
-          <Nav.Link href="/Rendezvenyfoglalas">Foglalások</Nav.Link>
+          <Nav.Link href="/Rendezvenyfoglalasok">Foglalások</Nav.Link>
           )}
           
           
@@ -230,7 +230,7 @@ class App extends Component {
             <Route path="/Kommenttorles" component={Kommenttorles} />
             <Route path="/ErtekelesekSzama" component={ErtekelesekSzama} />
             <Route path="/Rendezveny" component={Rendezveny} />
-            <Route path="/Rendezvenyfoglalas" component={Rendezvenyfoglalas} />
+            <Route path="/Rendezvenyfoglalasok" component={Rendezvenyfoglalas} />
           </Switch>
         </div>
           </div>

@@ -1,10 +1,10 @@
 import React, { Component} from 'react';
 import { StyleSheet, View,Text,TextInput,Picker, TouchableOpacity} from 'react-native';
 import DatePicker from "react-datepicker";
+import { addMonths } from 'date-fns';
 import "react-datepicker/dist/react-datepicker.css";
 import hu from 'date-fns/locale/hu';
 import { registerLocale,CalendarContainer} from  "react-datepicker";
-import { Last } from 'react-bootstrap/esm/PageItem';
 registerLocale('hu', hu)
 export default class FetchExample extends Component {
 
@@ -13,12 +13,12 @@ export default class FetchExample extends Component {
       
       this.state ={
         dataSource:[],
-        dataSource2:[],
+        dataSource2:0,
         etteremnev:"",
         nev:"",
         telefon:"",
         email:"",
-        dt:new Date(),
+        dt:addMonths(new Date(), 1),
         
         kecske:[],
         valaszt:1
@@ -99,7 +99,8 @@ export default class FetchExample extends Component {
           this.state.teljesdat=this.state.dt.getFullYear()+"/"+(this.state.dt.getMonth()+1)+"/"+this.state.dt.getDate()
           
           let bemenet={
-            bevitel1:this.state.teljesdat
+            bevitel1:this.state.teljesdat,
+            bevitel2:this.state.valaszt
             
           }
         
@@ -110,11 +111,23 @@ export default class FetchExample extends Component {
             } )
             .then((response) => response.json())
             .then((adat) => {   
-              
+              var sz=""
+              adat.forEach(element => {
+                if(element.db==0)
+            {
+              this.felvitel()
+
+            }
+            else
+            {
+              alert("Ez az időpont már foglalt")
+            }
+                
+              });
               
               this.setState({
                 isLoading: false,
-                dataSource2: adat,
+                dataSource2:sz,
               }, function(){          
             });
             })
@@ -122,11 +135,8 @@ export default class FetchExample extends Component {
               console.error(error);
             });   
           }    
-          const elem=this.state.dataSource2
-          for (let index = 0; index < elem.length; index++) {
-            console.log(index)
-            
-          }
+          
+          
           
           this.setState({dataSource2:[]})
             /*if(elem==0)
@@ -168,6 +178,7 @@ export default class FetchExample extends Component {
 
     return (
         <View style={styles.container}>
+          <Text style={{fontSize:34,marginBottom:20}}>Rendezvény foglalás</Text>
          <View style={{flexDirection:"row"}}>
         
         <Text style={styles.label1}>
@@ -189,7 +200,7 @@ export default class FetchExample extends Component {
         
         <View style={{flexDirection:"row"}}>
         
-        <Text style={styles.label1}>
+        <Text style={styles.label1} >
          Név:
         </Text>
         <TextInput
@@ -222,13 +233,13 @@ export default class FetchExample extends Component {
         /></View>
         
         <View style={{flexDirection:"row"}}>
-        <Text style={styles.label1} style={{marginRight:10}}>
+        <Text style={{marginRight:20,marginTop:3}} >
          Dátum:
         </Text>
         <DatePicker
         selected={this.state.dt} 
         onChange={(newdate) => this.setState({dt:newdate})}
-        minDate={new Date()}
+        minDate={addMonths(new Date(), 1)}
         locale="hu"
         dateFormat="yyyy/MM/dd"
         showMonthDropdown
@@ -282,5 +293,8 @@ const styles = StyleSheet.create({
     backgroundColor:"white",
      marginLeft:"auto",
      marginRight:700
-  }
+  },
+  
+
+
 });
