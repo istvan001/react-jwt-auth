@@ -1,6 +1,5 @@
 import React, { Component} from 'react';
-import { StyleSheet, ActivityIndicator, FlatList, Text, View, Image,TouchableOpacity,TextInput,Dimensions} from 'react-native';
-import ReactStars from 'react-stars';
+import { StyleSheet, ActivityIndicator, FlatList, Text, View, Image,TouchableOpacity,TextInput} from 'react-native';
 import {Collapse,CollapseHeader, CollapseBody} from 'accordion-collapse-react-native';
 
 export default class FetchExample extends Component {
@@ -232,6 +231,61 @@ export default class FetchExample extends Component {
       alap=()=>{
         this.frissit();
       }
+      like =(szam)=>
+  
+      {
+        
+        
+        let bemenet={
+          bevitel1:szam
+          
+        }
+      
+        fetch('http://localhost:8080/like' ,{
+          method: "POST",
+          body: JSON.stringify(bemenet),
+          headers: {"Content-type": "application/json; charset=UTF-8"}
+          } )
+          .then((response) => response.json())
+          .then((adat) => {
+            
+           
+      
+            this.frissit()
+           
+          })
+          .catch((error) =>{
+            console.error(error);
+          });       
+        }
+  
+        dislike =(szam)=>
+    
+        {
+          
+          
+          let bemenet={
+            bevitel1:szam
+            
+          }
+        
+          fetch('http://localhost:8080/dislike' ,{
+            method: "POST",
+            body: JSON.stringify(bemenet),
+            headers: {"Content-type": "application/json; charset=UTF-8"}
+            } )
+            .then((response) => response.json())
+            .then((adat) => {
+              
+             
+        
+              this.frissit()
+             
+            })
+            .catch((error) =>{
+              console.error(error);
+            });       
+          }
 
      
 
@@ -262,19 +316,19 @@ export default class FetchExample extends Component {
       )
     }
 
-    let dimensions = Dimensions.get("window")
+    
    
 
 
     
     return (
-      <View style={{width:Math.round((dimensions.width * 10) / 12) , height:Math.round((dimensions.width * 10) / 16)}}>
+      <View >
       
         <Text style={{fontSize:64,fontStyle:"italic",marginBottom:10}}>Éttermek</Text>
       
       <Collapse>
       
-          <CollapseHeader style={{borderWidth:1,borderRadius:10,width:200,height:40,margin:5,backgroundColor:"white"}}>
+          <CollapseHeader style={{borderWidth:1,borderRadius:10,width:200,height:40,margin:10,backgroundColor:"white"}}>
             
             
             <Text style={{textAlign:"center",fontSize:25}}>Rendezés</Text>
@@ -302,10 +356,10 @@ export default class FetchExample extends Component {
             <Text style={{textAlign:"center",fontSize:20}}>Értékelés</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={{borderWidth:1,borderRadius:10,width:170,height:30,margin:5,marginLeft:10,backgroundColor:"white"}}
+              style={{borderWidth:1,borderRadius:10,width:170,height:30,margin:5,marginBottom:10,marginLeft:10,backgroundColor:"white"}}
               onPress={async(szam)=>this.alap()}
               >
-            <Text style={{textAlign:"center",fontSize:20}}>alap</Text>
+            <Text style={{textAlign:"center",fontSize:20}}>Alap rendezés</Text>
             </TouchableOpacity>
             </View>
             </CollapseBody>
@@ -317,10 +371,10 @@ export default class FetchExample extends Component {
 
 
 
-      <View style={{alignItems:"center"}}>
+      <View style={{alignItems:"center",justifyContent:'center'}}>
       
         <FlatList
-        contentContainerStyle={{flexDirection : "row", flexWrap : "wrap", justifyContent:'center', alignItems:'center'}} 
+        
         
         
         data={this.state.dataSource}
@@ -329,14 +383,22 @@ export default class FetchExample extends Component {
          
         <View style={styles.card}>
           <View style={styles.center}>
-            <Image style={styles.image} style={{height:Math.round((dimensions.width * 4) / 15),width:Math.round((dimensions.width * 9) / 15)}}  source={{uri: 'http://localhost:8080/'+item.kep}}/>
+            <Image  style={{height:350,width:800,borderWidth:1,borderRadius:10,marginRight:"auto",resizeMode : 'cover',marginBottom: 10}}  source={{uri: 'http://localhost:8080/'+item.kep}}/>
           </View>
+          
           <Text style={styles.title}>{item.nev}</Text>
           <Text style={styles.label}>Cím: {item.lakcim}</Text>
           <Text style={styles.label}>Nyitvatartás: {"\n"}{item.nyitas}</Text>
           <Text style={styles.label}>Telefon: {item.telefon}</Text>
+          <View style={{flexDirection:"row"}}>
+             <Image source={require('./like.png')} onClick={()=>this.like(item.id)} resizeMode='contain'  style={{flex:.2, height:50,width:50,margin:10}} />
+             <Text style={{paddingTop:15, fontSize:25}}>{item.db}</Text>
+             <Image source={require('./dislike.png')} onClick={()=>this.dislike(item.id)} resizeMode='contain' style={{flex:.2, height:50,width:50,margin:10,marginLeft:30  }} />
+             <Text style={{paddingTop:15, fontSize:25}}>{item.db2}</Text>
+           </View>
            
-          <Text style={{padding:2,fontSize:20}}>Értékelés:</Text>  
+           
+         {/* <Text style={{padding:2,fontSize:20}}>Értékelés:</Text>  
 
           <TouchableOpacity
           onPress={ ()=>this.kattintas(item.id)}
@@ -353,8 +415,9 @@ export default class FetchExample extends Component {
             
      
           </TouchableOpacity>
-          <Text style={styles.label} style={{marginLeft:25,marginBottom:10}}>Átlag: {Math.round((item.atlag + Number.EPSILON) * 100) / 100}/5</Text>
-
+          <Text  style={{padding:5,marginLeft:25,marginBottom:10}}>Átlag: {Math.round((item.atlag + Number.EPSILON) * 100) / 100}/5</Text>
+    */}
+          
           
 
           <Collapse
@@ -379,7 +442,7 @@ export default class FetchExample extends Component {
             data={this.state.dataSource2}
         
             renderItem={({item}) =>
-            <View style={styles.velemeny}>
+            <View style={{margin:10,borderWidth:1,padding:10,borderRadius:10}}>
             
             <Text style={{ padding: 5,fontSize:17}}>Név:</Text>
             <Text style={{padding: 5,fontSize:15,marginLeft:10}}>{item.velemeny_nev}</Text>
@@ -499,11 +562,8 @@ const styles = StyleSheet.create({
       padding: 5
       
     },
-    image:{
-      marginRight:"auto", 
-      resizeMode : 'cover',
-      marginBottom: 10
-    },
+    
+    
     
     
     label1:{
