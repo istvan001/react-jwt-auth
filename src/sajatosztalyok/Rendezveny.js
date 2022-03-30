@@ -76,7 +76,7 @@ export default class FetchExample extends Component {
         this.setState({nev:""})
         this.setState({telefon:""})
         this.setState({email:""})
-        this.setState({dt:new Date()})
+        this.setState({dt:addMonths(new Date(), 1)})
       })
       .catch((error) =>{
         console.error(error);
@@ -138,16 +138,8 @@ export default class FetchExample extends Component {
           
           
           
-          this.setState({dataSource2:[]})
-            /*if(elem==0)
-            {
-              this.felvitel()
-
-            }
-            else
-            {
-              alert("Ez az időpont már foglalt")
-            }*/
+          
+            
        }
        
       
