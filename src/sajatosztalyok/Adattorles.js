@@ -214,8 +214,6 @@ export default class FetchExample extends Component {
           <Text style={styles.label}>Cím: {item.lakcim}</Text>
           <Text style={styles.label}>Nyitvatartás: {"\n"}{item.nyitas}</Text>
           <Text style={styles.label}>Telefon: {item.telefon}</Text>
-          <Text style={styles.label1}>Értékelés: {Math.round((item.atlag + Number.EPSILON) * 100) / 100}/5</Text> 
-          
 
           <TouchableOpacity style={styles.gomb} onPress={ ()=>this.torles(item.id)} >
             Törlés
