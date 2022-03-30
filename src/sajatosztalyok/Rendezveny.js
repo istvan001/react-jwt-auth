@@ -62,7 +62,7 @@ export default class FetchExample extends Component {
 
     }
   
-    fetch('http://localhost:8080/rendezveny' ,{
+    fetch('http://localhost:8080/rendezvenyfeltoltes' ,{
       method: "POST",
       body: JSON.stringify(bemenet),
       headers: {"Content-type": "application/json; charset=UTF-8"}
