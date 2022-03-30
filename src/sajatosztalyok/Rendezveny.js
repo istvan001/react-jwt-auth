@@ -171,14 +171,15 @@ export default class FetchExample extends Component {
     return (
         <View style={styles.container}>
           <Text style={{fontSize:34,marginBottom:20}}>Rendezvény foglalás</Text>
-         <View style={{flexDirection:"row"}}>
+          <View style={{backgroundColor:"lightgrey",padding:10,borderWidth:2,borderRadius:10,shadowRadius:10,width:'28%',justifyContent:'space-between'}}>
+         
         
         <Text style={styles.label1}>
         Válassza ki az Éttermet:
         </Text>
         <Picker
         selectedValue={this.state.valaszt}
-        style={{ height: 30, width: 200 ,textAlign:'center', marginLeft:10,marginBottom:10}}
+        style={{ height: 30, width: 250,textAlign:'center', marginLeft:10,marginBottom:10}}
         onValueChange={(itemValue, itemIndex) => this.setState({valaszt:itemValue})}
       >
         {this.state.dataSource.map((item) => (
@@ -188,9 +189,9 @@ export default class FetchExample extends Component {
        
       </Picker>
 
-        </View>
         
-        <View style={{flexDirection:"row"}}>
+        
+        
         
         <Text style={styles.label1} >
          Név:
@@ -200,9 +201,9 @@ export default class FetchExample extends Component {
           placeholder="Kérem adja meg a nevét!"
           onChangeText={(nev) => this.setState({nev})}
           value={this.state.nev}
-        /></View>
+        />
 
-        <View style={{flexDirection:"row"}}>
+        
         <Text style={styles.label1}>
          Telefonszám:
         </Text>
@@ -211,9 +212,9 @@ export default class FetchExample extends Component {
           placeholder="Kérem adja meg a telefonszámát!"
           onChangeText={(telefon) => this.setState({telefon})}
           value={this.state.telefon}
-        /></View>
+        />
 
-        <View style={{flexDirection:"row"}}>
+        
         <Text style={styles.label1}>
          E-mail:
         </Text>
@@ -222,12 +223,13 @@ export default class FetchExample extends Component {
           placeholder="Kérem adja meg az Email címét!"
           onChangeText={(email) => this.setState({email})}
           value={this.state.email}
-        /></View>
+        />
         
-        <View style={{flexDirection:"row"}}>
-        <Text style={{marginRight:20,marginTop:3}} >
+        
+        <Text style={styles.label1} >
          Dátum:
         </Text>
+        <View style={{paddingLeft:10}}>
         <DatePicker
         selected={this.state.dt} 
         onChange={(newdate) => this.setState({dt:newdate})}
@@ -245,25 +247,20 @@ export default class FetchExample extends Component {
      
         
 
-         />
-         </View>
+         /></View>
+         
        
         
-
+        <View style={{alignItems:"center"}}>
         <TouchableOpacity 
-        
-         
                   onPress={()=>this.kivizsgal()}
-                  
-                  
-                  
          >
-                    <View style={{width:200,backgroundColor:"lightgrey",marginTop:10,borderRadius:5}}>
-                      <Text style={{textAlign:"center",padding:10 }}>Felvitel</Text>
+                    <View style={{width:200,backgroundColor:"#00004d",marginTop:10,borderRadius:5}}>
+                      <Text style={{textAlign:"center",padding:10,color:"white"}}>Felvitel</Text>
                     </View>
         </TouchableOpacity>
-        
-        
+        </View>
+        </View>
 
       </View>
     );
@@ -272,8 +269,10 @@ export default class FetchExample extends Component {
 
 const styles = StyleSheet.create({
   container: {
-   justifyContent: 'center',
-    margin:10
+    alignItems:'center',
+    flex:1,
+    width: '100%' ,
+    height:'100%',
   },szovegdoboz:
   {
     padding:10,
@@ -283,9 +282,12 @@ const styles = StyleSheet.create({
     width:250,
     height:30,
     backgroundColor:"white",
-     marginLeft:"auto",
-     marginRight:700
+     marginLeft:10,
+     marginRight:"auto"
   },
+  label1:{
+    fontSize:20
+  }
   
 
 
