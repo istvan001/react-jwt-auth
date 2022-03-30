@@ -17,10 +17,10 @@ export default class ButtonBasics extends Component {
   render() {
     return (
       
-      <View >
-        <Text style={{fontSize:34,marginBottom:10}} >Étterem Adatok feltölése </Text>
+      <View style={{ alignItems:'center',flex:1,width: '100%',height:'100%',}} >
+        <Text style={{fontSize:34,marginBottom:10,marginLeft:"auto",marginRight:"auto",justifyContent:"center"}} >Étterem Adatok feltölése </Text>
+        <View style={{backgroundColor:"#c1d0f0",padding:10,borderWidth:2,borderRadius:10,shadowRadius:10,width:'35%',justifyContent:'space-between'}}>
         
-        <View style={{flexDirection : "row"}}>
         <Text style={styles.label1}>
          Étterem Néve:
         </Text>
@@ -29,9 +29,9 @@ export default class ButtonBasics extends Component {
           placeholder="Add meg az étterem nevét!"
           onChangeText={(etteremnev) => this.setState({etteremnev})}
           value={this.state.etteremnev}
-        /></View>
+        />
 
-        <View style={{flexDirection : "row"}}>
+        
         <Text style={styles.label1}>
          Étterem lakcíme:
         </Text>
@@ -40,9 +40,9 @@ export default class ButtonBasics extends Component {
           placeholder="Add meg az étterem lakcímét!"
           onChangeText={(lakcim) => this.setState({lakcim})}
           value={this.state.lakcim}
-        /></View>
+        />
 
-        <View style={{flexDirection : "row"}}>
+        
         <Text style={styles.label1}>
          Étterem telefonszáma:
         </Text>
@@ -51,8 +51,8 @@ export default class ButtonBasics extends Component {
           placeholder="Add meg az étterem telefonszámát!"
           onChangeText={(telefon) => this.setState({telefon})}
           value={this.state.telefon}
-        /></View>
-        <View style={{flexDirection : "row"}}>
+        />
+        
         <Text style={styles.label1} >
          Étterem nyitvatartási ideje:
         </Text>
@@ -62,13 +62,14 @@ export default class ButtonBasics extends Component {
           onChangeText={(nyitas) => this.setState({nyitas})}
           value={this.state.nyitas}
         />
-        </View>
+        
         
         
 
       <FileUpload  etteremnev={this.state.etteremnev} lakcim={this.state.lakcim} telefon={this.state.telefon} nyitas={this.state.nyitas} >
         
       </FileUpload>
+      </View>
       </View>
         
     );
@@ -86,6 +87,9 @@ const styles = StyleSheet.create({
     height:30,
     backgroundColor:"white",
      marginLeft:"auto",
-     marginRight:600
+     marginRight:"auto"
+  },
+  label1:{
+    fontSize:20
   }
 });
