@@ -28,7 +28,7 @@ function FileUpload(props) {
             );
            
             console.log(res);
-            alert("sikerült")
+            alert("Sikeres feltöltés!")
                 //-----------------------------------------------------------------------------
                 let bemenet={
                     bevitel1:props.etteremnev,
@@ -49,7 +49,7 @@ function FileUpload(props) {
                     .then((response) => response.text())
                     .then((szoveg) => {
               
-                      alert(szoveg)
+                      
                       
                       
                       
@@ -60,13 +60,13 @@ function FileUpload(props) {
                     //---------------------------------------------------------------
 
         } catch (ex) {
-            console.log(ex);
+            alert("Töltsd ki az összes mezőt!");
         }
     };
 
         return (
             <div className="App">          
-                <input type="file" onChange={saveFile} />
+                <input type="file" onChange={saveFile} style={{marginTop:5,marginBottom:10}} />
                
                 <button onClick={uploadFile}>Feltöltés</button>
                 

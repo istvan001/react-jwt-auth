@@ -58,7 +58,7 @@ export default class FetchExample extends Component {
 
     Kereses=()=>
   {
-    alert("Megnyomva")
+    
     var bemenet={
       bevitel1:this.state.kereses,
       
@@ -88,7 +88,7 @@ export default class FetchExample extends Component {
     }
 
     felvitel= (szam)=>{
-      alert("Megnyomva")
+      
       let bemenet={
         bevitel1:szam,
         bevitel2:this.state.aktid
@@ -102,7 +102,7 @@ export default class FetchExample extends Component {
         .then((response) => response.text())
         .then((szoveg) => {
     
-          alert(szoveg)
+          
           
           this.frissit()
         })
@@ -114,15 +114,11 @@ export default class FetchExample extends Component {
   
 
 
-    kattintas=(szam)=>
-  {
-    alert(szam)
-    this.felvitel(szam)
-  }
+   
 
   torles=(szam)=>
   {
-    alert("Megnyomva")
+    
     let bemenet={
       bevitel1:szam,
       
@@ -137,7 +133,7 @@ export default class FetchExample extends Component {
       .then((szoveg) => {
         this.frissit()
   
-        alert(szoveg)
+        alert("Sikeres törlés!")
       })
       .catch((error) =>{
         console.error(error);
@@ -158,20 +154,14 @@ export default class FetchExample extends Component {
         </View>
       )
     }
-    const ratingChanged = (ratings) => {
-      alert(ratings)
-      this.setState({aktid:ratings})
-     
-      
-      
-    }
+    
 
     
     return (
       <View>
-        <Text style={{fontSize:34}}>Éttermek törlése:</Text>
+        
         <View style={{flexDirection : "row", flexWrap : "wrap", justifyContent:'center'}}>
-      <Text style={{fontSize:64,fontStyle:"italic",margin:10,marginLeft:40}} >Éttermek:</Text>
+      <Text style={{fontSize:64,fontStyle:"italic",margin:10,marginLeft:40}} >Éttermek törlése:</Text>
 
       <View style={{borderWidth:1,borderRadius:10,padding: 10,alignItems:"center",borderRadius:20,marginLeft:"auto",marginRight:"auto",width:400}}>
         

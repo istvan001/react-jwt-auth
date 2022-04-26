@@ -38,7 +38,7 @@ export default class FetchExample extends Component {
 
     torles=(szam)=>
   {
-    alert("Megnyomva")
+    
     let bemenet={
       bevitel1:szam,
       
@@ -53,7 +53,7 @@ export default class FetchExample extends Component {
       .then((szoveg) => {
         this.frissit()
   
-        alert(szoveg)
+        //alert(szoveg)
       })
       .catch((error) =>{
         console.error(error);
@@ -62,7 +62,7 @@ export default class FetchExample extends Component {
 
     Kereses=()=>
   {
-    alert("Megnyomva")
+    //alert("Megnyomva")
     var bemenet={
       bevitel1:this.state.kereses,
       

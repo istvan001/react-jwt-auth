@@ -71,7 +71,7 @@ export default class FetchExample extends Component {
       .then((szoveg) => {
         
   
-        alert(szoveg)
+       // alert(szoveg)
         
         this.setState({nev:""})
         this.setState({telefon:""})
@@ -171,7 +171,7 @@ export default class FetchExample extends Component {
     return (
         <View style={styles.container}>
           <Text style={{fontSize:34,marginBottom:20}}>Rendezvény foglalás</Text>
-          <View style={{backgroundColor:"lightgrey",padding:10,borderWidth:2,borderRadius:10,shadowRadius:10,width:'28%',justifyContent:'space-between'}}>
+          <View style={{backgroundColor:"lightgrey",padding:10,borderWidth:2,borderRadius:10,shadowRadius:10,width:'70%',justifyContent:'space-between'}}>
          
         
         <Text style={styles.label1}>
@@ -179,7 +179,7 @@ export default class FetchExample extends Component {
         </Text>
         <Picker
         selectedValue={this.state.valaszt}
-        style={{ height: 30, width: 250,textAlign:'center', marginLeft:10,marginBottom:10}}
+        style={{ height: 30, width: '95%',textAlign:'center', marginLeft:10,marginBottom:10}}
         onValueChange={(itemValue, itemIndex) => this.setState({valaszt:itemValue})}
       >
         {this.state.dataSource.map((item) => (
@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
     borderWidth:1,
     borderRadius:10,
     marginBottom:5,
-    width:250,
+    width:'95%',
     height:30,
     backgroundColor:"white",
      marginLeft:10,

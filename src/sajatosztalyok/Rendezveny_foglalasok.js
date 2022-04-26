@@ -98,7 +98,7 @@ export default class ButtonBasics extends Component {
   {
     
     this.state.teljesdat=this.state.dt.getFullYear()+"/"+(this.state.dt.getMonth()+1)+"/"+this.state.dt.getDate()
-    alert(this.state.teljesdat)
+    //alert(this.state.teljesdat)
     let bemenet={
       bevitel1:this.state.teljesdat
       
@@ -127,7 +127,7 @@ export default class ButtonBasics extends Component {
 
     torles=(szam)=>
   {
-    alert("Megnyomva")
+    //alert("Megnyomva")
     let bemenet={
       bevitel1:szam,
       
@@ -142,7 +142,7 @@ export default class ButtonBasics extends Component {
       .then((szoveg) => {
         this.frissit()
   
-        alert(szoveg)
+        //alert(szoveg)
       })
       .catch((error) =>{
         console.error(error);
@@ -247,14 +247,13 @@ export default class ButtonBasics extends Component {
             keyExtractor={({ id }, index) => id}
             renderItem={({ item }) => (
               <View>
-              
               <View style={{margin:10,borderWidth:1,padding:10,borderRadius:10}}>
 
               <Text style={{fontSize:25}}>Étterem neve: {item.nev}</Text>
               <Text style={{fontSize:15}}>Felhasználó neve: {item.felhasznalo}</Text>
               <Text style={{fontSize:15}}>Felhasználó telefonszáma: {item.telefon}</Text>
               <Text style={{fontSize:15}}>Felhasználó E-mail címe: {item.email}</Text>
-              <Text style={{fontSize:15,marginBottom:10}}>Időpont: {item.idopont.split('T')[0]}</Text>
+              <Text style={{fontSize:15,marginBottom:10}}>Időpont: {((item.idopont.split('T')[0]).split('-')[0])+"-"+((item.idopont.split('T')[0]).split('-')[1])}-{(parseInt((item.idopont.split('T')[0]).split('-')[2])+1)}</Text>
 
 
 

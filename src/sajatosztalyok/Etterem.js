@@ -1,6 +1,7 @@
 import React, { Component} from 'react';
-import { StyleSheet, ActivityIndicator, FlatList, Text, View, Image,TouchableOpacity,TextInput} from 'react-native';
+import { StyleSheet, ActivityIndicator, FlatList, Text, View, Image,TouchableOpacity,TextInput,Dimensions} from 'react-native';
 import {Collapse,CollapseHeader, CollapseBody} from 'accordion-collapse-react-native';
+
 
 export default class FetchExample extends Component {
 
@@ -71,8 +72,8 @@ export default class FetchExample extends Component {
         this.setState({megnyomva:m})
     }
 
-    felvitel= (ratings,hanyadik)=>{
-      alert("Megnyomva")
+   /* felvitel= (ratings,hanyadik)=>{
+      
       let bemenet={
         bevitel1:hanyadik,
         bevitel2:ratings
@@ -93,7 +94,7 @@ export default class FetchExample extends Component {
         .catch((error) =>{
           console.error(error);
         });       
-      }
+      }*/
   
   
   velemeny =(szam)=>
@@ -129,7 +130,12 @@ export default class FetchExample extends Component {
     
     
       vfelvitel=async (szam)=>{
-        alert(szam)
+        if(this.state.nev=="" || this.state.velemeny=="")
+        {
+            alert("Minden mezőt tölts ki!")
+        }
+          else{
+              
          let bemenet={
           bevitel1: szam,
           bevitel2: this.state.nev,
@@ -149,12 +155,14 @@ export default class FetchExample extends Component {
             this.setState({velemeny:""})
     
             this.frissit()
+            this.velemeny(szam)
             
             
           })
           .catch((error) =>{
             console.error(error);
           });
+          }
     
     
     
@@ -356,7 +364,7 @@ export default class FetchExample extends Component {
             <Text style={{textAlign:"center",fontSize:20}}>Értékelés</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={{borderWidth:1,borderRadius:10,width:170,height:30,margin:5,marginBottom:10,marginLeft:10,backgroundColor:"white"}}
+              style={{borderWidth:1,borderRadius:10,width:170,height:30,margin:5,marginBottom:20,marginLeft:10,backgroundColor:"white"}}
               onPress={async(szam)=>this.alap()}
               >
             <Text style={{textAlign:"center",fontSize:20}}>Alap rendezés</Text>
@@ -375,16 +383,16 @@ export default class FetchExample extends Component {
       
         <FlatList
         
-        
+        style={{width:'100%'}}
         
         data={this.state.dataSource}
         
         renderItem={({item}) =>
          
         <View style={styles.card}>
-          <View style={styles.center}>
-            <Image  style={{height:350,width:800,borderWidth:1,borderRadius:10,marginRight:"auto",resizeMode : 'cover',marginBottom: 10}}  source={{uri: 'http://localhost:8080/'+item.kep}}/>
-          </View>
+          
+            <Image  style={{height:350 ,width:'100%',borderWidth:1,borderRadius:10,marginLeft:"auto",marginRight:"auto",resizeMode : 'cover',marginBottom: 10}}  source={{uri: 'http://localhost:8080/'+item.kep}}/>
+         
           
           <Text style={styles.title}>{item.nev}</Text>
           <Text style={styles.label}>Cím: {item.lakcim}</Text>
@@ -534,7 +542,8 @@ const styles = StyleSheet.create({
     },
     center:{
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
+      borderwidth:1
     },
     title:{
       textAlign: "justify",
@@ -546,10 +555,12 @@ const styles = StyleSheet.create({
     card: {
       padding: 10,
       marginBottom: 10,
-      width:'100°',
-      borderTopWidth:2,
+      borderRadius:10,
+      borderTopWidth:3,
+      borderBottomWidth:3,
+      borderWidth:1,
       backgroundColor: "white",
-      margin:"auto"
+     
 
 
 
